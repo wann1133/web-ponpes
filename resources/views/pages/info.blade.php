@@ -29,6 +29,195 @@
         </div>
     </section>
 
+    <section class="bg-white py-16">
+        <div class="mx-auto max-w-7xl px-6 lg:px-10">
+            <div class="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+                <div>
+                    <h2 class="section-heading">Program Pendidikan & Fasilitas</h2>
+                    <p class="text-sm text-gray-600">
+                        Gambaran ringkas jenjang pendidikan, program unggulan, serta fasilitas yang disiapkan Pondok Pesantren Tahfidzul Qur'an Nurul Ikhlas.
+                    </p>
+                </div>
+            </div>
+
+            <div class="mt-10 grid gap-6 lg:grid-cols-3">
+                <div class="rounded-3xl border border-pondok-primary/10 bg-white p-8 shadow-sm transition hover:-translate-y-1 hover:shadow-soft">
+                    <div class="flex items-center gap-2 text-pondok-primary">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v12m6-6H6" />
+                        </svg>
+                        <span class="text-sm font-semibold uppercase tracking-wide">Program Pendidikan</span>
+                    </div>
+                    <h3 class="mt-4 text-2xl font-semibold text-pondok-primary">Membentuk Generasi Qur'ani</h3>
+                    <ul class="mt-6 space-y-3 text-sm text-gray-600">
+                        <li class="flex items-start gap-3">
+                            <span class="mt-1 inline-flex h-6 w-6 items-center justify-center rounded-full bg-pondok-accent text-pondok-primary">1</span>
+                            SMP Islam Nurul Ikhlas
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <span class="mt-1 inline-flex h-6 w-6 items-center justify-center rounded-full bg-pondok-accent text-pondok-primary">2</span>
+                            SMA Islam Nurul Ikhlas
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="rounded-3xl border border-pondok-primary/10 bg-white p-8 shadow-sm transition hover:-translate-y-1 hover:shadow-soft">
+                    <div class="flex items-center gap-2 text-pondok-primary">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 8c1.5-2 4-2 5.5 0A3.5 3.5 0 0112 15.5v2.75M12 8c-1.5-2-4-2-5.5 0A3.5 3.5 0 0012 15.5v2.75" />
+                        </svg>
+                        <span class="text-sm font-semibold uppercase tracking-wide">Program Unggulan</span>
+                    </div>
+                    <h3 class="mt-4 text-2xl font-semibold text-pondok-primary">Pembinaan Karakter Qur'ani</h3>
+                    <ul class="mt-6 space-y-3 text-sm text-gray-600">
+                        <li class="flex items-start gap-3">
+                            <span class="mt-1 inline-flex h-2 w-2 rounded-full bg-pondok-primary"></span>
+                            Tahfidzul Qur'an
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <span class="mt-1 inline-flex h-2 w-2 rounded-full bg-pondok-primary"></span>
+                            Seni membaca Al-Qur'an
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <span class="mt-1 inline-flex h-2 w-2 rounded-full bg-pondok-primary"></span>
+                            Belajar Kitab Kuning
+                        </li>
+                    </ul>
+                    <div class="mt-6 rounded-2xl bg-pondok-accent/40 p-4 text-sm text-pondok-primary">
+                        <p class="font-semibold">Kontak Program Unggulan</p>
+                        <a href="tel:+6281382408479" class="mt-1 inline-flex items-center gap-2 text-pondok-primary hover:text-pondok-secondary">
+                            Ust. Bahaudin &middot; 0813-8240-8479
+                        </a>
+                    </div>
+                </div>
+
+                <div class="rounded-3xl border border-pondok-primary/10 bg-white p-8 shadow-sm transition hover:-translate-y-1 hover:shadow-soft">
+                    <div class="flex items-center gap-2 text-pondok-primary">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M3 7.5l9-4.5 9 4.5-9 4.5L3 7.5zm0 9l9 4.5 9-4.5m-9-4.5l9 4.5M12 7.5V3" />
+                        </svg>
+                        <span class="text-sm font-semibold uppercase tracking-wide">Fasilitas Pesantren</span>
+                    </div>
+                    <h3 class="mt-4 text-2xl font-semibold text-pondok-primary">Lingkungan Belajar Nyaman</h3>
+                    <ul class="mt-6 grid gap-2 text-sm text-gray-600 sm:grid-cols-2">
+                        <li class="flex items-center gap-2">
+                            <span class="inline-block h-1.5 w-1.5 rounded-full bg-pondok-primary"></span>
+                            Gedung asrama
+                        </li>
+                        <li class="flex items-center gap-2">
+                            <span class="inline-block h-1.5 w-1.5 rounded-full bg-pondok-primary"></span>
+                            Lapangan olahraga
+                        </li>
+                        <li class="flex items-center gap-2">
+                            <span class="inline-block h-1.5 w-1.5 rounded-full bg-pondok-primary"></span>
+                            Jaringan Wi-Fi / internet
+                        </li>
+                        <li class="flex items-center gap-2">
+                            <span class="inline-block h-1.5 w-1.5 rounded-full bg-pondok-primary"></span>
+                            Koperasi pesantren
+                        </li>
+                        <li class="flex items-center gap-2">
+                            <span class="inline-block h-1.5 w-1.5 rounded-full bg-pondok-primary"></span>
+                            Majelis putera & puteri
+                        </li>
+                        <li class="flex items-center gap-2">
+                            <span class="inline-block h-1.5 w-1.5 rounded-full bg-pondok-primary"></span>
+                            Bus pesantren
+                        </li>
+                        <li class="flex items-center gap-2 sm:col-span-2">
+                            <span class="inline-block h-1.5 w-1.5 rounded-full bg-pondok-primary"></span>
+                            Kantin santri
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="mt-10 grid gap-6 lg:grid-cols-[1fr_1.2fr]">
+                <div class="flex flex-col justify-between rounded-3xl border border-pondok-primary/10 bg-gradient-to-br from-pondok-primary to-pondok-secondary p-8 text-white shadow-soft">
+                    <div>
+                        <span class="inline-flex items-center gap-2 rounded-full bg-white/15 px-4 py-1 text-xs font-semibold uppercase tracking-wide text-white/70">
+                            Biaya Pendaftaran
+                        </span>
+                        <h3 class="mt-4 text-4xl font-heading">Rp 250.000,00</h3>
+                        <p class="mt-3 text-sm text-white/80">
+                            Biaya administrasi pendaftaran santri baru. Silakan lakukan konfirmasi pembayaran kepada panitia setelah menyerahkan berkas.
+                        </p>
+                    </div>
+                    <div class="mt-6 space-y-2">
+                        <p class="text-xs uppercase tracking-wide text-white/70">Scan untuk informasi lengkap</p>
+                        <p class="text-sm text-white/80">
+                            Kami menyediakan panduan dan formulir tambahan melalui tautan pendaftaran daring.
+                        </p>
+                        <a href="#pendaftaran"
+                            class="inline-flex w-full items-center justify-center rounded-full bg-white/90 px-4 py-2 text-sm font-semibold text-pondok-primary transition hover:bg-white">
+                            Form Pendaftaran Online
+                        </a>
+                    </div>
+                </div>
+
+                <div class="rounded-3xl border border-pondok-primary/10 bg-white p-8 shadow-sm">
+                    <div class="grid gap-6 md:grid-cols-2">
+                        <div class="space-y-3">
+                            <span class="text-xs font-semibold uppercase tracking-wide text-pondok-primary">Periode Pendaftaran</span>
+                            <ul class="space-y-2 text-sm text-gray-600">
+                                <li>
+                                    <span class="font-semibold text-pondok-primary">Gelombang 1</span><br>
+                                    17 Oktober 2024 &ndash; 20 Februari 2025
+                                </li>
+                                <li>
+                                    <span class="font-semibold text-pondok-primary">Gelombang 2</span><br>
+                                    24 Februari 2025 &ndash; 06 Juni 2025
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="space-y-3">
+                            <span class="text-xs font-semibold uppercase tracking-wide text-pondok-primary">Syarat Pendaftaran</span>
+                            <ul class="space-y-2 text-sm text-gray-600">
+                                <li>Surat Keterangan Lulus (SKL)</li>
+                                <li>Fotokopi Akta Kelahiran</li>
+                                <li>Fotokopi KTP Orang Tua</li>
+                                <li>Fotokopi Kartu Keluarga</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="mt-6 grid gap-6 md:grid-cols-2">
+                        <div class="space-y-3">
+                            <span class="text-xs font-semibold uppercase tracking-wide text-pondok-primary">Teknis Pendaftaran</span>
+                            <ul class="space-y-2 text-sm text-gray-600">
+                                <li>
+                                    <span class="font-semibold text-pondok-primary">Offline</span><br>
+                                    Datang langsung ke pesantren dan membawa seluruh persyaratan.
+                                </li>
+                                <li>
+                                    <span class="font-semibold text-pondok-primary">Online</span><br>
+                                    Menghubungi kontak pendaftaran untuk verifikasi berkas dan biaya.
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="space-y-3">
+                            <span class="text-xs font-semibold uppercase tracking-wide text-pondok-primary">Informasi Kontak</span>
+                            <ul class="space-y-2 text-sm text-gray-600">
+                                <li>
+                                    <span class="font-semibold text-pondok-primary">Ust. Ahmad</span><br>
+                                    <a href="tel:+6281290418612" class="text-pondok-primary hover:text-pondok-secondary">0812-9041-8612</a>
+                                </li>
+                                <li>
+                                    <span class="font-semibold text-pondok-primary">Ust. Bahaudin</span><br>
+                                    <a href="tel:+6281382408479" class="text-pondok-primary hover:text-pondok-secondary">0813-8240-8479</a>
+                                </li>
+                                <li>
+                                    <span class="font-semibold text-pondok-primary">Ust. Ian Apriansyah</span><br>
+                                    <a href="tel:+6285707439529" class="text-pondok-primary hover:text-pondok-secondary">0857-0743-9529</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <section id="program" class="bg-white py-16">
         <div class="mx-auto max-w-7xl px-6 lg:px-10">
             <div class="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
@@ -168,5 +357,4 @@
         </div>
     </section>
 @endsection
-
 

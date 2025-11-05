@@ -46,16 +46,16 @@
 
         <div class="hidden items-center gap-4 lg:flex">
             <a
-                href="{{ route('admin.login') }}"
+                href="{{ url('/info#contact') }}"
                 class="text-sm font-medium text-gray-600 transition duration-200 hover:text-pondok-primary focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-pondok-primary"
             >
-                Masuk
+                Hubungi Kami
             </a>
             <a
-                href="{{ url('/info#contact') }}"
+                href="{{ route('admin.login') }}"
                 class="inline-flex items-center rounded-full bg-pondok-primary px-5 py-2 text-sm font-semibold text-white shadow-md transition duration-200 hover:bg-pondok-secondary focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-pondok-primary"
             >
-                Hubungi Kami
+                Pendaftaran
             </a>
         </div>
 
@@ -118,21 +118,17 @@
                 </a>
             @endforeach
             <a
-                href="{{ route('admin.login') }}"
-                class="flex items-center justify-between rounded-xl px-4 py-3 text-sm font-medium text-gray-600 transition duration-200 hover:bg-pondok-accent/40"
-                x-on:click="open = false"
-            >
-                <span>Masuk</span>
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-pondok-primary/70" fill="none"
-                    viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
-                </svg>
-            </a>
-            <a
                 href="{{ url('/info#contact') }}"
                 class="inline-flex w-full items-center justify-center rounded-full bg-pondok-primary px-4 py-3 text-sm font-semibold text-white shadow-md transition duration-200 hover:bg-pondok-secondary focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-pondok-primary"
             >
                 Hubungi Kami
+            </a>
+            <a
+                href="{{ route('admin.login') }}"
+                class="inline-flex w-full items-center justify-center rounded-full border border-pondok-primary px-4 py-3 text-sm font-semibold text-pondok-primary transition duration-200 hover:bg-pondok-primary/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-pondok-primary"
+                x-on:click="open = false"
+            >
+                Pendaftaran
             </a>
         </nav>
     </div>

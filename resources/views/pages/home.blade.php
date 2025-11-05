@@ -4,6 +4,30 @@
 @section('meta_description', 'Profil singkat Pondok Pesantren Tahfidzul Qur\'an Nurul Ikhlas dengan program tahfidz, visi misi, nilai keikhlasan, dan informasi terbaru kegiatan pesantren.')
 
 @section('content')
+    <div
+        x-data="promoModal()"
+        x-init="init()"
+        x-show="visible"
+        x-transition.opacity
+        x-cloak
+        class="fixed inset-0 z-[70] flex items-center justify-center bg-black/60 p-4 sm:p-8"
+    >
+        <div class="relative w-full max-w-xl overflow-hidden rounded-3xl bg-white shadow-2xl md:max-w-2xl">
+            <button
+                type="button"
+                class="absolute right-4 top-4 inline-flex h-9 w-9 items-center justify-center rounded-full bg-black/70 text-white transition hover:bg-black focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white/70"
+                x-on:click="dismiss()"
+                aria-label="Tutup brosur pendaftaran"
+            >
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                    stroke-width="1.8" class="h-4 w-4">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+            </button>
+            <img src="{{ asset('poster.jpg') }}" alt="Brosur Pendaftaran Pondok Pesantren Tahfidzul Qur'an Nurul Ikhlas"
+                class="h-auto w-full object-cover">
+        </div>
+    </div>
 @php
     $heroImage = null;
     $heroCandidates = [
@@ -390,6 +414,41 @@
 @push('scripts')
     <script>
         document.addEventListener('alpine:init', () => {
+            Alpine.data('promoModal', () => ({
+                visible: false,
+                timer: null,
+
+                init() {
+                    let dismissed = false;
+                    try {
+                        dismissed = sessionStorage.getItem('ponpesPosterDismissed');
+                    } catch (error) {
+                        dismissed = false;
+                    }
+
+                    if (dismissed) {
+                        return;
+                    }
+
+                    this.visible = true;
+                    this.timer = setTimeout(() => this.dismiss(), 5000);
+                },
+
+                dismiss() {
+                    if (this.timer) {
+                        clearTimeout(this.timer);
+                        this.timer = null;
+                    }
+
+                    this.visible = false;
+                    try {
+                        sessionStorage.setItem('ponpesPosterDismissed', '1');
+                    } catch (error) {
+                        // ignore storage failures
+                    }
+                },
+            }));
+
             Alpine.data('galleryCarousel', (config = {}) => ({
                 current: 0,
                 total: 0,

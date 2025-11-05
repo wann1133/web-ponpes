@@ -1,19 +1,19 @@
 @php
     $contacts = [
         [
-            'label' => 'Admin Pendaftaran',
-            'number' => '6281234567890',
-            'display' => '+62 812-3456-7890',
+            'label' => 'Ust. Ahmad',
+            'number' => '6281290418612',
+            'display' => '0812-9041-8612',
         ],
         [
-            'label' => 'Admin Akademik',
-            'number' => '6285212345678',
-            'display' => '+62 852-1234-5678',
+            'label' => 'Ust. Bahaudin (SMA)',
+            'number' => '6281382408479',
+            'display' => '0813-8240-8479',
         ],
         [
-            'label' => 'Admin Asrama',
-            'number' => '6289876543210',
-            'display' => '+62 898-7654-3210',
+            'label' => 'Ust. Ian Apriansyah',
+            'number' => '6285707439529',
+            'display' => '0857-0743-9529',
         ],
     ];
 @endphp
