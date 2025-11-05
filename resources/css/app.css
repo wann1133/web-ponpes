@@ -27,6 +27,9 @@
     .btn-primary {
         @apply inline-flex items-center justify-center gap-2 rounded-xl bg-pondok-primary px-6 py-3 font-semibold text-white transition duration-200 hover:bg-pondok-secondary hover:shadow-soft focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-pondok-secondary/70 focus-visible:ring-offset-2;
     }
+    .btn-secondary {
+        @apply inline-flex items-center justify-center gap-2 rounded-xl border border-pondok-primary/30 px-6 py-3 font-semibold text-pondok-primary transition duration-200 hover:border-pondok-primary hover:text-pondok-secondary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-pondok-primary/40 focus-visible:ring-offset-2;
+    }
 
     .section-heading {
         @apply text-3xl font-semibold text-pondok-primary md:text-4xl;

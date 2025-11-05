@@ -21,9 +21,8 @@
 
     @if ($featured)
         @php
-            $featuredThumbnail = \Illuminate\Support\Str::startsWith($featured['thumbnail'], ['http://', 'https://'])
-                ? $featured['thumbnail']
-                : (file_exists(public_path($featured['thumbnail'])) ? asset($featured['thumbnail']) : 'https://images.unsplash.com/photo-1523580846011-d3a5bc25702b?auto=format&fit=crop&w=1600&q=80');
+            $featuredThumbnail = $featured->thumbnail_url
+                ?: 'https://images.unsplash.com/photo-1523580846011-d3a5bc25702b?auto=format&fit=crop&w=1600&q=80';
         @endphp
         <section class="bg-white py-16">
             <div class="mx-auto max-w-7xl px-6 lg:px-10">
@@ -33,15 +32,15 @@
                             Sorotan Terbaru
                         </span>
                         <div class="space-y-2 text-xs text-gray-500">
-                            <span>{{ $featured['formatted_date'] }}</span>
+                            <span>{{ $featured->formatted_date }}</span>
                             <span class="mx-2">•</span>
-                            <span>{{ $featured['author'] }}</span>
+                            <span>{{ $featured->author }}</span>
                             <span class="mx-2">•</span>
-                            <span>{{ $featured['reading_time'] }}</span>
+                            <span>{{ $featured->reading_time }}</span>
                         </div>
-                        <h2 class="text-3xl font-heading text-pondok-primary">{{ $featured['title'] }}</h2>
-                        <p class="text-sm text-gray-600">{{ $featured['excerpt'] }}</p>
-                        <a href="{{ $featured['url'] }}"
+                        <h2 class="text-3xl font-heading text-pondok-primary">{{ $featured->title }}</h2>
+                        <p class="text-sm text-gray-600">{{ $featured->excerpt }}</p>
+                        <a href="{{ route('blog.show', $featured) }}"
                             class="inline-flex items-center gap-2 text-sm font-semibold text-pondok-primary hover:text-pondok-secondary">
                             Baca Artikel
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24"
@@ -50,8 +49,8 @@
                             </svg>
                         </a>
                     </div>
-                    <div class="relative overflow-hidden rounded-3xl">
-                        <img src="{{ $featuredThumbnail }}" alt="{{ $featured['title'] }}" class="h-full w-full object-cover">
+                    <div class="relative aspect-[16/9] overflow-hidden rounded-3xl">
+                        <img src="{{ $featuredThumbnail }}" alt="{{ $featured->title }}" class="absolute inset-0 h-full w-full object-cover">
                     </div>
                 </div>
             </div>
@@ -91,28 +90,27 @@
                 </aside>
                 <div class="flex-1">
                     <div class="grid gap-6 md:grid-cols-2">
-                        @foreach ($posts as $post)
+                                                @foreach ($posts as $post)
                             @php
-                                $thumbnail = \Illuminate\Support\Str::startsWith($post['thumbnail'], ['http://', 'https://'])
-                                    ? $post['thumbnail']
-                                    : (file_exists(public_path($post['thumbnail'])) ? asset($post['thumbnail']) : 'https://images.unsplash.com/photo-1464037866556-6812c9d1c72e?auto=format&fit=crop&w=800&q=80');
+                                $thumbnail = $post->thumbnail_url
+                                    ?: 'https://images.unsplash.com/photo-1464037866556-6812c9d1c72e?auto=format&fit=crop&w=800&q=80';
                             @endphp
                             <article class="flex h-full flex-col overflow-hidden rounded-3xl border border-pondok-primary/10 bg-white shadow-sm transition hover:-translate-y-1 hover:shadow-soft">
                                 <div class="relative aspect-[4/3] overflow-hidden bg-pondok-accent">
-                                    <img src="{{ $thumbnail }}" alt="{{ $post['title'] }}"
-                                        class="h-full w-full object-cover transition duration-500 hover:scale-105">
+                                    <img src="{{ $thumbnail }}" alt="{{ $post->title }}"
+                                        class="absolute inset-0 h-full w-full object-cover transition duration-500 hover:scale-105">
                                     <span class="absolute left-4 top-4 rounded-full bg-white/90 px-3 py-1 text-xs font-semibold text-pondok-primary">
-                                        {{ $post['category'] }}
+                                        {{ $post->category }}
                                     </span>
                                 </div>
                                 <div class="flex flex-1 flex-col gap-3 p-6">
                                     <div class="text-xs text-gray-500">
-                                        {{ $post['formatted_date'] }} • {{ $post['reading_time'] }}
+                                        {{ $post->formatted_date }} &bull; {{ $post->reading_time }}
                                     </div>
-                                    <h3 class="text-lg font-semibold text-pondok-primary">{{ $post['title'] }}</h3>
-                                    <p class="text-sm text-gray-600">{{ $post['excerpt'] }}</p>
+                                    <h3 class="text-lg font-semibold text-pondok-primary">{{ $post->title }}</h3>
+                                    <p class="text-sm text-gray-600">{{ $post->excerpt }}</p>
                                     <div class="mt-auto">
-                                        <a href="{{ $post['url'] }}"
+                                        <a href="{{ route('blog.show', $post) }}"
                                             class="inline-flex items-center gap-2 text-sm font-semibold text-pondok-primary hover:text-pondok-secondary">
                                             Baca Selengkapnya
                                             <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none"
@@ -131,3 +129,6 @@
         </div>
     </section>
 @endsection
+
+
+

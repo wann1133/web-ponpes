@@ -2,13 +2,16 @@
 
 namespace App\Http\Controllers;
 
-use App\Support\BlogRepository;
+use App\Models\BlogPost;
+use Carbon\Carbon;
 use Illuminate\View\View;
 
 class HomeController extends Controller
 {
     public function index(): View
     {
+        Carbon::setLocale('id');
+
         $statistics = [
             ['value' => '320+', 'label' => 'Santri Tahfidz Aktif'],
             ['value' => '45', 'label' => 'Pengajar & Pembimbing'],
@@ -58,7 +61,10 @@ class HomeController extends Controller
             'Didukung pengajar bersanad dan kurikulum integratif antara diniyah dan akademik umum.',
         ];
 
-        $blogPosts = BlogRepository::latest();
+        $blogPosts = BlogPost::published()
+            ->orderByDesc('published_at')
+            ->take(3)
+            ->get();
 
         return view('pages.home', compact('statistics', 'programs', 'values', 'highlights', 'blogPosts'));
     }

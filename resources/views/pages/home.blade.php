@@ -119,7 +119,7 @@
                 </a>
             </div>
 
-            <div class="mt-10 grid gap-6 md:grid-cols-3">
+            <div class="mt-10 grid gap-6 md:grid-cols-2 xl:grid-cols-3">
                 @foreach ($values as $value)
                     <div class="rounded-3xl border border-pondok-primary/10 bg-pondok-accent/40 p-8 shadow-sm transition hover:-translate-y-1 hover:shadow-soft">
                         <div class="flex h-12 w-12 items-center justify-center rounded-2xl bg-pondok-primary/10 text-pondok-primary">
@@ -196,39 +196,39 @@
                 <a href="{{ route('blog') }}" class="btn-primary text-sm">Lihat Semua Artikel</a>
             </div>
 
-            <div class="mt-10 grid gap-6 md:grid-cols-3">
+            <div class="mt-10 grid gap-6 md:grid-cols-2 xl:grid-cols-3">
                 @foreach ($blogPosts as $post)
                     @php
-                        $thumbnail = \Illuminate\Support\Str::startsWith($post['thumbnail'], ['http://', 'https://'])
-                            ? $post['thumbnail']
-                            : (file_exists(public_path($post['thumbnail'])) ? asset($post['thumbnail']) : 'https://images.unsplash.com/photo-1496280425805-1d58e5b61e7f?auto=format&fit=crop&w=800&q=80');
+                        $thumbnail = $post->thumbnail_url
+                            ?: 'https://images.unsplash.com/photo-1496280425805-1d58e5b61e7f?auto=format&fit=crop&w=800&q=80';
                     @endphp
+
                     <article class="group flex h-full flex-col overflow-hidden rounded-3xl border border-pondok-primary/10 bg-white shadow-sm transition hover:-translate-y-1 hover:shadow-soft">
                         <div class="relative aspect-[4/3] overflow-hidden bg-pondok-accent">
-                            <img src="{{ $thumbnail }}" alt="{{ $post['title'] }}"
-                                class="h-full w-full object-cover transition duration-500 group-hover:scale-105">
-                            <span class="absolute left-4 top-4 rounded-full bg-white/90 px-3 py-1 text-xs font-semibold text-pondok-primary">
-                                {{ $post['category'] }}
-                            </span>
+                            <img src="{{ $thumbnail }}" alt="{{ $post->title }}"
+                                class="absolute inset-0 h-full w-full object-cover transition duration-500 group-hover:scale-105">
+                                <span class="absolute left-4 top-4 rounded-full bg-white/90 px-3 py-1 text-xs font-semibold text-pondok-primary">
+                                    {{ $post->category }}
+                                </span>
                         </div>
                         <div class="flex flex-1 flex-col gap-4 p-6">
-                            <div class="space-y-1 text-xs text-gray-500">
-                                <span>{{ $post['formatted_date'] }}</span>
-                                <span class="mx-2">•</span>
-                                <span>{{ $post['reading_time'] }}</span>
+                            <div class="flex flex-wrap items-center gap-2 text-xs text-gray-500">
+                                <span>{{ $post->formatted_date }}</span>
+                                @if ($post->reading_time)
+                                    <span class="text-gray-300">&bull;</span>
+                                    <span>{{ $post->reading_time }}</span>
+                                @endif
                             </div>
-                            <h3 class="text-lg font-semibold text-pondok-primary">{{ $post['title'] }}</h3>
-                            <p class="text-sm text-gray-600">{{ $post['excerpt'] }}</p>
+                            <h3 class="text-lg font-semibold text-pondok-primary">{{ $post->title }}</h3>
+                            <p class="text-sm text-gray-600">{{ $post->excerpt }}</p>
                             <div class="mt-auto">
-                                <a href="{{ $post['url'] }}" class="inline-flex items-center gap-2 text-sm font-semibold text-pondok-primary hover:text-pondok-secondary">
+                                <a href="{{ route('blog.show', $post) }}" class="inline-flex items-center gap-2 text-sm font-semibold text-pondok-primary hover:text-pondok-secondary">
                                     Baca Selengkapnya
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24"
-                                        stroke="currentColor" stroke-width="2">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                                         <path stroke-linecap="round" stroke-linejoin="round" d="M17.25 8.25L21 12l-3.75 3.75M21 12H3" />
                                     </svg>
                                 </a>
                             </div>
-                        </div>
                     </article>
                 @endforeach
             </div>
@@ -261,3 +261,6 @@
         </div>
     </section>
 @endsection
+
+
+
