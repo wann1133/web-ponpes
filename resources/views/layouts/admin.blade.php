@@ -6,24 +6,43 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>@yield('title', 'Panel Admin | Nurul Ikhlas')</title>
 
-    <link rel="icon" type="image/png" href="{{ asset('favicon.png') }}">
+    <link rel="icon" type="image/svg+xml" href="{{ asset('logo.svg') }}">
 
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     @stack('head')
 </head>
 
-<body class="bg-slate-100 font-sans text-gray-800 antialiased">
-    <div class="min-h-screen lg:flex">
-        <aside id="adminSidebar" class="bg-white shadow-lg lg:w-64">
-            <div class="flex items-center justify-between border-b border-slate-200 px-6 py-4">
-                <div>
-                    <p class="text-xs font-semibold uppercase tracking-wide text-pondok-primary">Panel Admin</p>
-                    <p class="text-sm font-medium text-slate-600">Nurul Ikhlas</p>
-                </div>
-                <button type="button" data-sidebar-toggle aria-controls="adminSidebar" aria-expanded="true"
-                    class="rounded-full p-2 text-pondok-primary transition hover:bg-pondok-primary/10 focus:outline-none focus:ring-2 focus:ring-pondok-primary/30">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none"
-                        viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+    @php
+        $logoPath = null;
+        foreach (['logo.svg', 'logoo.jpg', 'logoo.png'] as $logoCandidate) {
+            if (file_exists(public_path($logoCandidate))) {
+                $logoPath = asset($logoCandidate);
+                break;
+            }
+        }
+    @endphp
+
+    <body class="bg-slate-100 font-sans text-gray-800 antialiased">
+        <div class="min-h-screen lg:flex">
+            <aside id="adminSidebar" class="bg-white shadow-lg lg:w-64">
+                <div class="flex items-center justify-between border-b border-slate-200 px-6 py-4">
+                    <div class="flex items-center gap-3">
+                        @if ($logoPath)
+                            <img src="{{ $logoPath }}" alt="Logo Pondok Pesantren Tahfidzul Qur'an Nurul Ikhlas"
+                                class="h-8 w-auto object-contain">
+                        @else
+                            <span class="flex h-8 w-8 items-center justify-center rounded-full bg-pondok-primary text-white font-heading text-base">
+                                NI
+                            </span>
+                        @endif
+                        <div>
+                            <p class="text-xs font-semibold uppercase tracking-wide text-pondok-primary">Panel Admin</p>
+                        </div>
+                    </div>
+                    <button type="button" data-sidebar-toggle aria-controls="adminSidebar" aria-expanded="true"
+                        class="rounded-full p-2 text-pondok-primary transition hover:bg-pondok-primary/10 focus:outline-none focus:ring-2 focus:ring-pondok-primary/30">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none"
+                            viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
                         <path stroke-linecap="round" stroke-linejoin="round"
                             d="M3 7.5C3 5.015 5.015 3 7.5 3h9A4.5 4.5 0 0121 7.5v9A4.5 4.5 0 0116.5 21h-9A4.5 4.5 0 013 16.5v-9z" />
                         <path stroke-linecap="round" stroke-linejoin="round"

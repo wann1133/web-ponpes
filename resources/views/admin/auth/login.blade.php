@@ -8,11 +8,24 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 
+@php
+    $logoPath = null;
+    foreach (['logo.svg', 'logoo.jpg', 'logoo.png'] as $logoCandidate) {
+        if (file_exists(public_path($logoCandidate))) {
+            $logoPath = asset($logoCandidate);
+            break;
+        }
+    }
+@endphp
+
 <body class="flex min-h-screen items-center justify-center bg-gradient-to-br from-pondok-primary/5 via-white to-pondok-secondary/10">
     <div class="w-full max-w-md rounded-3xl bg-white p-8 shadow-xl">
         <div class="text-center">
+            @if ($logoPath)
+                <img src="{{ $logoPath }}" alt="Logo Pondok Pesantren Tahfidzul Qur'an Nurul Ikhlas"
+                    class="mx-auto mb-4 h-10 w-10 object-contain">
+            @endif
             <p class="text-xs font-semibold uppercase tracking-[0.3em] text-pondok-primary">Panel Admin</p>
-            <h1 class="mt-2 text-2xl font-semibold text-pondok-primary">Nurul Ikhlas</h1>
             <p class="mt-1 text-sm text-slate-500">Silakan masuk menggunakan akun admin pesantren.</p>
         </div>
 

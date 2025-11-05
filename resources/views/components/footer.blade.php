@@ -1,7 +1,22 @@
+@php
+    $logoPath = null;
+    foreach (['logo.svg', 'logoo.jpg', 'logoo.png'] as $logoCandidate) {
+        if (file_exists(public_path($logoCandidate))) {
+            $logoPath = asset($logoCandidate);
+            break;
+        }
+    }
+@endphp
+
 <footer id="contact" class="bg-pondok-primary text-white">
     <div class="mx-auto grid max-w-7xl gap-12 px-6 py-16 lg:grid-cols-3 lg:px-10">
-        <div>
-            <h3 class="font-heading text-2xl font-semibold">Pondok Pesantren Tahfidzul Qur'an Nurul Ikhlas</h3>
+        <div class="space-y-4">
+            @if ($logoPath)
+                <div class="flex">
+                    <img src="{{ $logoPath }}" alt="Logo Pondok Pesantren Tahfidzul Qur'an Nurul Ikhlas"
+                        class="h-12 w-auto max-w-none object-contain sm:h-14">
+                </div>
+            @endif
             <p class="mt-4 max-w-sm text-sm text-pondok-accent/90">
                 Mencetak generasi Qur'ani yang berakhlak mulia, berilmu, dan berdaya guna bagi umat.
             </p>
@@ -56,9 +71,9 @@
                 </div>
             </div>
             <div class="mt-6 flex items-center gap-4">
-                <a href="https://www.instagram.com" target="_blank"
+                <a href="https://www.instagram.com/pptq_nurulikhlas" target="_blank" rel="noopener"
                     class="inline-flex h-10 w-10 items-center justify-center rounded-full bg-white/15 transition hover:bg-white/25"
-                    aria-label="Instagram">
+                    aria-label="Instagram PPTQ Nurul Ikhlas">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
                         stroke="currentColor" stroke-width="1.8">
                         <path stroke-linecap="round" stroke-linejoin="round"
@@ -67,17 +82,14 @@
                             d="M15.25 11.988a3.25 3.25 0 11-6.5.024 3.25 3.25 0 016.5-.024zM17.5 6.5h.01v.01H17.5z" />
                     </svg>
                 </a>
-                <a href="https://www.youtube.com" target="_blank"
+                <a href="https://www.tiktok.com/@pptq_nurulikhlas" target="_blank" rel="noopener"
                     class="inline-flex h-10 w-10 items-center justify-center rounded-full bg-white/15 transition hover:bg-white/25"
-                    aria-label="YouTube">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
-                        <path
-                            d="M10.983 15.173l3.184-1.867a.364.364 0 000-.625l-3.184-1.867a.364.364 0 00-.548.312v3.735a.364.364 0 00.548.312z" />
-                        <path
-                            d="M21.8 8.001a2.75 2.75 0 00-1.936-1.947C18.263 5.75 12 5.75 12 5.75s-6.263 0-7.864.304A2.75 2.75 0 002.2 8.001 28.304 28.304 0 001.875 12 28.304 28.304 0 002.2 15.999a2.75 2.75 0 001.936 1.947C5.737 18.25 12 18.25 12 18.25s6.263 0 7.864-.304A2.75 2.75 0 0021.8 15.999 28.304 28.304 0 0022.125 12 28.304 28.304 0 0021.8 8.001z" />
+                    aria-label="TikTok PPTQ Nurul Ikhlas">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M16.707 4.04a5.51 5.51 0 01-.637-2.274h-2.76v11.606a2.725 2.725 0 11-2.366-2.7v-2.77a5.507 5.507 0 105.3 5.498V9.081a8.25 8.25 0 003.256.672V6.993a5.522 5.522 0 01-2.793-.823z" />
                     </svg>
                 </a>
-                <a href="https://wa.me/6281234567890" target="_blank"
+                <a href="https://wa.me/6281234567890" target="_blank" rel="noopener"
                     class="inline-flex h-10 w-10 items-center justify-center rounded-full bg-white/15 transition hover:bg-white/25"
                     aria-label="WhatsApp">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">

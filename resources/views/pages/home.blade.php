@@ -5,9 +5,22 @@
 
 @section('content')
 @php
-    $heroImage = file_exists(public_path('images/pondok-hero.jpg'))
-        ? asset('images/pondok-hero.jpg')
-        : 'https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1600&q=80';
+    $heroImage = null;
+    $heroCandidates = [
+        'foto pesantren.jpeg',
+        'images/pondok-hero.jpg',
+    ];
+
+    foreach ($heroCandidates as $heroCandidate) {
+        if (file_exists(public_path($heroCandidate))) {
+            $heroImage = asset($heroCandidate);
+            break;
+        }
+    }
+
+    if (! $heroImage) {
+        $heroImage = 'https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1600&q=80';
+    }
 @endphp
 
     <section class="relative isolate overflow-hidden">
@@ -186,6 +199,118 @@
         </div>
     </section>
 
+    @php
+        $galleryImages = [
+            [
+                'file' => 'foto pesantren.jpeg',
+                'alt' => 'Suasana halaman utama Pondok Pesantren Nurul Ikhlas',
+                'caption' => 'Suasana Pesantren',
+            ],
+            [
+                'file' => 'fasilistas lapangan.jpeg',
+                'alt' => 'Fasilitas lapangan olahraga Pondok Pesantren Nurul Ikhlas',
+                'caption' => 'Fasilitas Lapangan',
+            ],
+            [
+                'file' => 'asrama putri.png',
+                'alt' => 'Asrama putri Pondok Pesantren Nurul Ikhlas',
+                'caption' => 'Asrama Putri',
+            ],
+            [
+                'file' => 'koperasi.png',
+                'alt' => 'Koperasi santri Pondok Pesantren Nurul Ikhlas',
+                'caption' => 'Koperasi Santri',
+            ],
+            [
+                'file' => 'labolatorium.png',
+                'alt' => 'Laboratorium kegiatan belajar Pondok Pesantren Nurul Ikhlas',
+                'caption' => 'Laboratorium',
+            ],
+        ];
+        $gallerySlides = array_chunk($galleryImages, 3);
+        if (! empty($gallerySlides)) {
+            $lastIndex = count($gallerySlides) - 1;
+            $missingItems = 3 - count($gallerySlides[$lastIndex]);
+            if ($missingItems > 0) {
+                for ($i = 0; $i < $missingItems && $i < count($galleryImages); $i++) {
+                    $gallerySlides[$lastIndex][] = $galleryImages[$i];
+                }
+            }
+        }
+    @endphp
+    <section class="bg-pondok-accent/40 py-16">
+        <div class="mx-auto max-w-7xl px-6 lg:px-10">
+            <div class="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+                <div>
+                    <h2 class="section-heading">Galeri Pesantren</h2>
+                    <p class="text-sm text-gray-600">Sekilas suasana kegiatan dan fasilitas yang mendukung pembinaan santri.</p>
+                </div>
+            </div>
+
+            <div class="relative mt-10"
+                x-data="galleryCarousel({ interval: 5000 })"
+                x-init="init()"
+                x-on:mouseenter="pause()"
+                x-on:mouseleave="resume()"
+            >
+                <div class="overflow-hidden" x-ref="container">
+                    <div class="flex" x-ref="track">
+                        @foreach ($gallerySlides as $slide)
+                            <div class="w-full flex-shrink-0">
+                                <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+                                    @foreach ($slide as $image)
+                                        <figure class="group relative overflow-hidden rounded-3xl border border-pondok-primary/10 bg-white shadow-soft transition hover:-translate-y-1 hover:shadow-lg">
+                                            <div class="aspect-[4/3] w-full overflow-hidden">
+                                                <img src="{{ asset(rawurlencode($image['file'])) }}" alt="{{ $image['alt'] }}"
+                                                    loading="lazy"
+                                                    class="h-full w-full object-cover transition duration-500 group-hover:scale-105">
+                                            </div>
+                                            <figcaption class="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent px-6 py-4 text-sm font-medium text-white">
+                                                {{ $image['caption'] }}
+                                            </figcaption>
+                                        </figure>
+                                    @endforeach
+                                </div>
+                            </div>
+                        @endforeach
+                    </div>
+                </div>
+
+                <div class="pointer-events-none absolute inset-y-0 left-0 right-0 flex items-center justify-between px-3">
+                    <button type="button"
+                        class="pointer-events-auto inline-flex h-10 w-10 items-center justify-center rounded-full bg-white/80 text-pondok-primary shadow transition hover:bg-white"
+                        x-on:click="prev(); resume();"
+                        aria-label="Slide sebelumnya">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
+                            stroke="currentColor" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
+                        </svg>
+                    </button>
+                    <button type="button"
+                        class="pointer-events-auto inline-flex h-10 w-10 items-center justify-center rounded-full bg-white/80 text-pondok-primary shadow transition hover:bg-white"
+                        x-on:click="next(); resume();"
+                        aria-label="Slide selanjutnya">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
+                            stroke="currentColor" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5L15.75 12l-7.5 7.5" />
+                        </svg>
+                    </button>
+                </div>
+
+                <div class="mt-6 flex justify-center gap-2">
+                    <template x-for="index in total" :key="index">
+                        <button type="button"
+                            class="h-2 rounded-full transition"
+                            :class="index - 1 === current ? 'w-6 bg-pondok-primary' : 'w-2 bg-pondok-primary/40'"
+                            x-on:click="goTo(index - 1); resume();"
+                            :aria-label="`Pilih slide ${index}`">
+                        </button>
+                    </template>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <section class="bg-white py-16">
         <div class="mx-auto max-w-7xl px-6 lg:px-10">
             <div class="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
@@ -262,5 +387,127 @@
     </section>
 @endsection
 
+@push('scripts')
+    <script>
+        document.addEventListener('alpine:init', () => {
+            Alpine.data('galleryCarousel', (config = {}) => ({
+                current: 0,
+                total: 0,
+                interval: config.interval || 5000,
+                timer: null,
+                slides: [],
+                slideWidth: 0,
+                onResize: null,
 
+                init() {
+                    this.$nextTick(() => {
+                        this.cacheSlides();
+                        this.updateDimensions();
+                        this.goTo(0, false);
 
+                        if (this.total > 1) {
+                            this.resume();
+                        }
+
+                        this.onResize = () => this.updateDimensions();
+                        window.addEventListener('resize', this.onResize);
+
+                        this.$el.addEventListener('alpine:destroy', () => {
+                            this.pause();
+                            if (this.onResize) {
+                                window.removeEventListener('resize', this.onResize);
+                            }
+                        });
+                    });
+                },
+
+                cacheSlides() {
+                    this.slides = Array.from(this.$refs.track?.children || []);
+                    this.total = this.slides.length;
+                },
+
+                updateDimensions() {
+                    if (!this.$refs.container) {
+                        return;
+                    }
+
+                    this.slideWidth = this.$refs.container.clientWidth;
+
+                    if (this.slideWidth === 0) {
+                        return;
+                    }
+
+                    this.slides.forEach((slide) => {
+                        slide.style.width = `${this.slideWidth}px`;
+                    });
+
+                    this.applyTransform(false);
+                },
+
+                applyTransform(animate = true) {
+                    if (!this.$refs.track) {
+                        return;
+                    }
+
+                    if (!animate) {
+                        this.$refs.track.style.transition = 'none';
+                    } else {
+                        this.$refs.track.style.transition = 'transform 600ms ease';
+                    }
+
+                    const offset = this.current * this.slideWidth;
+                    this.$refs.track.style.transform = `translateX(-${offset}px)`;
+
+                    if (!animate) {
+                        requestAnimationFrame(() => {
+                            if (this.$refs.track) {
+                                this.$refs.track.style.transition = '';
+                            }
+                        });
+                    }
+                },
+
+                goTo(index, animate = true) {
+                    if (this.total === 0) {
+                        return;
+                    }
+
+                    this.current = (index + this.total) % this.total;
+                    this.applyTransform(animate);
+                },
+
+                next() {
+                    if (this.total <= 1) {
+                        return;
+                    }
+
+                    this.goTo(this.current + 1);
+                },
+
+                prev() {
+                    if (this.total <= 1) {
+                        return;
+                    }
+
+                    this.goTo(this.current - 1);
+                },
+
+                resume() {
+                    if (this.total <= 1) {
+                        return;
+                    }
+
+                    this.pause();
+                    this.timer = setInterval(() => this.next(), this.interval);
+                },
+
+                pause() {
+                    if (this.timer) {
+                        clearInterval(this.timer);
+                        this.timer = null;
+                    }
+                },
+            }));
+        });
+    </script>
+@endpush

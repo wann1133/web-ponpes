@@ -21,6 +21,10 @@
     h6 {
         @apply font-heading tracking-tight text-gray-900;
     }
+
+    [x-cloak] {
+        display: none !important;
+    }
 }
 
 @layer components {

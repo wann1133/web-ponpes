@@ -28,7 +28,7 @@
 
     <title>@yield('title', 'Nurul Ikhlas | Pondok Pesantren Tahfidzul Qur\'an')</title>
 
-    <link rel="icon" type="image/png" href="{{ asset('favicon.png') }}">
+    <link rel="icon" type="image/svg+xml" href="{{ asset('logo.svg') }}">
 
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 
@@ -43,6 +43,8 @@
     </main>
 
     <x-footer />
+
+    <x-whatsapp-widget />
 
     @stack('scripts')
 </body>
