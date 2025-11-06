@@ -24,7 +24,7 @@
                     <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
                 </svg>
             </button>
-            <img src="{{ asset('poster.jpg') }}" alt="Brosur Pendaftaran Pondok Pesantren Tahfidzul Qur'an Nurul Ikhlas"
+            <img src="{{ asset('poster.png') }}" alt="Brosur Pendaftaran Pondok Pesantren Tahfidzul Qur'an Nurul Ikhlas"
                 class="h-auto w-full object-cover">
         </div>
     </div>
@@ -64,7 +64,7 @@
                     </svg>
                     Mencetak Generasi Qur'ani
                 </span>
-                <h1 class="text-4xl font-bold leading-tight md:text-5xl lg:text-6xl">
+                <h1 class="text-4xl font-bold leading-tight text-yellow-300 md:text-5xl lg:text-6xl">
                     Pondok Pesantren Tahfidzul Qur'an Nurul Ikhlas
                 </h1>
                 <p class="text-lg text-pondok-accent/90">

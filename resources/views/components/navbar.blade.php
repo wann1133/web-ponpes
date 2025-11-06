@@ -52,7 +52,7 @@
                 Hubungi Kami
             </a>
             <a
-                href="{{ route('admin.login') }}"
+                href="{{ route('pendaftaran.index') }}"
                 class="inline-flex items-center rounded-full bg-pondok-primary px-5 py-2 text-sm font-semibold text-white shadow-md transition duration-200 hover:bg-pondok-secondary focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-pondok-primary"
             >
                 Pendaftaran
@@ -124,7 +124,7 @@
                 Hubungi Kami
             </a>
             <a
-                href="{{ route('admin.login') }}"
+                href="{{ route('pendaftaran.index') }}"
                 class="inline-flex w-full items-center justify-center rounded-full border border-pondok-primary px-4 py-3 text-sm font-semibold text-pondok-primary transition duration-200 hover:bg-pondok-primary/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-pondok-primary"
                 x-on:click="open = false"
             >

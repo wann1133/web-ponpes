@@ -20,9 +20,8 @@
                         {{ $settings->hero_description ?? 'Jadwal rutin, program unggulan, serta informasi pendaftaran santri baru yang dirancang untuk mendukung perjalanan tahfidzul Qur\'an dan pembinaan karakter santri.' }}
                     </p>
                 </div>
-                @php $registrationUrl = $settings->registration_url ?? null; @endphp
-                <a id="pendaftaran" href="{{ $registrationUrl ?: '#' }}" {{ $registrationUrl ? 'target="_blank"' : 'aria-disabled=true' }}
-                    class="btn-primary w-fit text-sm {{ $registrationUrl ? '' : 'opacity-60 cursor-not-allowed' }}">
+                <a id="pendaftaran" href="{{ route('pendaftaran.index') }}"
+                    class="btn-primary w-fit text-sm">
                     Form Pendaftaran Online
                 </a>
             </div>
@@ -148,7 +147,7 @@
                         <p class="text-sm text-white/80">
                             Kami menyediakan panduan dan formulir tambahan melalui tautan pendaftaran daring.
                         </p>
-                        <a href="#pendaftaran"
+                        <a href="{{ route('pendaftaran.index') }}"
                             class="inline-flex w-full items-center justify-center rounded-full bg-white/90 px-4 py-2 text-sm font-semibold text-pondok-primary transition hover:bg-white">
                             Form Pendaftaran Online
                         </a>
@@ -357,4 +356,3 @@
         </div>
     </section>
 @endsection
-

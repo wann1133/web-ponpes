@@ -13,9 +13,9 @@ class HomeController extends Controller
         Carbon::setLocale('id');
 
         $statistics = [
-            ['value' => '320+', 'label' => 'Santri Tahfidz Aktif'],
-            ['value' => '45', 'label' => 'Pengajar & Pembimbing'],
-            ['value' => '15', 'label' => 'Angkatan Wisuda'],
+            ['value' => '160', 'label' => 'Santri Total'],
+            ['value' => '38', 'label' => 'Pengajar'],
+            ['value' => '3', 'label' => 'Angkatan'],
             ['value' => '30', 'label' => 'Program Pembinaan'],
         ];
 

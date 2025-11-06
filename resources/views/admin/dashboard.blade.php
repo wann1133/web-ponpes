@@ -13,6 +13,7 @@
                 ['label' => 'FAQ', 'value' => $stats['faqs'], 'route' => 'admin.faqs.index'],
                 ['label' => 'Artikel Blog', 'value' => $stats['blog_posts'], 'route' => 'admin.blog-posts.index'],
                 ['label' => 'Pengaturan Info', 'value' => $stats['has_settings'] ? 'Siap' : 'Belum', 'route' => 'admin.info-page.edit'],
+                ['label' => 'Pendaftar Baru', 'value' => $stats['registrations'], 'route' => 'admin.registrations.index'],
             ];
         @endphp
 
@@ -35,7 +36,7 @@
         @endforeach
     </div>
 
-    <div class="mt-10 grid gap-6 lg:grid-cols-2">
+    <div class="mt-10 grid gap-6 lg:grid-cols-3">
         <section class="rounded-3xl border border-pondok-primary/10 bg-white p-6 shadow-sm">
             <header class="flex items-center justify-between">
                 <h2 class="text-sm font-semibold text-pondok-primary">Artikel Blog Terbaru</h2>
@@ -78,6 +79,30 @@
                 @empty
                     <li class="rounded-2xl bg-pondok-accent/50 px-3 py-4 text-center text-xs text-slate-500">
                         Belum ada pengumuman aktif.
+                    </li>
+                @endforelse
+            </ul>
+        </section>
+
+        <section class="rounded-3xl border border-pondok-primary/10 bg-white p-6 shadow-sm">
+            <header class="flex items-center justify-between">
+                <h2 class="text-sm font-semibold text-pondok-primary">Pendaftar Terbaru</h2>
+                <a href="{{ route('admin.registrations.index') }}"
+                    class="text-xs font-semibold text-pondok-primary hover:text-pondok-secondary">
+                    Kelola
+                </a>
+            </header>
+            <ul class="mt-4 space-y-3 text-sm text-slate-600">
+                @forelse ($recentRegistrations as $registration)
+                    <li class="rounded-2xl border border-transparent px-3 py-2 transition hover:border-pondok-primary/20 hover:bg-pondok-accent/40">
+                        <p class="font-medium text-pondok-primary">{{ $registration->nama_lengkap }}</p>
+                        <p class="text-xs text-slate-500">
+                            {{ strtoupper($registration->jenjang) }} &bull; {{ $registration->created_at->format('d M Y') }}
+                        </p>
+                    </li>
+                @empty
+                    <li class="rounded-2xl bg-pondok-accent/50 px-3 py-4 text-center text-xs text-slate-500">
+                        Belum ada pendaftar masuk.
                     </li>
                 @endforelse
             </ul>

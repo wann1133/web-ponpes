@@ -26,10 +26,13 @@
         <div class="min-h-screen lg:flex">
             <aside id="adminSidebar" class="bg-white shadow-lg lg:w-64">
                 <div class="flex items-center justify-between border-b border-slate-200 px-6 py-4">
-                    <div class="flex items-center gap-3">
+                    <div class="flex items-center gap-2">
                         @if ($logoPath)
-                            <img src="{{ $logoPath }}" alt="Logo Pondok Pesantren Tahfidzul Qur'an Nurul Ikhlas"
-                                class="h-8 w-auto object-contain">
+                            <img
+                                src="{{ $logoPath }}"
+                                alt="Logo Pondok Pesantren Tahfidzul Qur'an Nurul Ikhlas"
+                                class="h-7 w-auto max-w-[140px] object-contain"
+                            >
                         @else
                             <span class="flex h-8 w-8 items-center justify-center rounded-full bg-pondok-primary text-white font-heading text-base">
                                 NI
@@ -41,7 +44,7 @@
                     </div>
                     <button type="button" data-sidebar-toggle aria-controls="adminSidebar" aria-expanded="true"
                         class="rounded-full p-2 text-pondok-primary transition hover:bg-pondok-primary/10 focus:outline-none focus:ring-2 focus:ring-pondok-primary/30">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none"
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none"
                             viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
                         <path stroke-linecap="round" stroke-linejoin="round"
                             d="M3 7.5C3 5.015 5.015 3 7.5 3h9A4.5 4.5 0 0121 7.5v9A4.5 4.5 0 0116.5 21h-9A4.5 4.5 0 013 16.5v-9z" />
@@ -60,6 +63,7 @@
                     ['label' => 'FAQ', 'icon' => 'question-mark-circle', 'route' => 'admin.faqs.index'],
                     ['label' => 'Halaman Info', 'icon' => 'document-text', 'route' => 'admin.info-page.edit'],
                     ['label' => 'Blog', 'icon' => 'newspaper', 'route' => 'admin.blog-posts.index'],
+                    ['label' => 'Pendaftar', 'icon' => 'users', 'route' => 'admin.registrations.index'],
                 ];
                 $icons = [
                     'home' => 'M3 9.75L12 3l9 6.75V20.25a.75.75 0 01-.75.75h-5.25v-5.25h-6v5.25H3.75a.75.75 0 01-.75-.75V9.75z',
@@ -69,6 +73,7 @@
                     'question-mark-circle' => 'M12 17.25h.007M12 6.75a3 3 0 00-3 3h1.5a1.5 1.5 0 113 0c0 1.5-2.25 1.312-2.25 3.75m.75 3.75h.007',
                     'document-text' => 'M9 3.75h6l3 3v12a1.5 1.5 0 01-1.5 1.5H9A1.5 1.5 0 017.5 18.75V5.25A1.5 1.5 0 019 3.75zm0 6h6m-6 3h6m-6 3h3',
                     'newspaper' => 'M4.5 5.25h15v13.5h-15A1.5 1.5 0 013 17.25V6.75A1.5 1.5 0 014.5 5.25zm12 3h-4.5m4.5 3h-4.5m4.5 3H12',
+                    'users' => 'M15 19.5v-1.125A3.375 3.375 0 0011.625 15h-5.25A3.375 3.375 0 003 18.375V19.5m17.25 0v-1.125A3.375 3.375 0 0016.875 15H16.5m-3-6.375a3.375 3.375 0 11-6.75 0 3.375 3.375 0 016.75 0zm6.75 3.375a2.625 2.625 0 11-5.25 0 2.625 2.625 0 015.25 0z',
                 ];
             @endphp
 
