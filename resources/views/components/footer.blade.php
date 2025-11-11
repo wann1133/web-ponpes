@@ -33,8 +33,8 @@
                     </span>
                     <div>
                         <p class="font-medium text-white">Email</p>
-                        <a href="mailto:info@nurulikhlas.sch.id" class="text-pondok-accent hover:text-white">
-                            info@nurulikhlas.sch.id
+                        <a href="mailto:tahfidzulqurannurulikhlas@gmail.com" class="text-pondok-accent hover:text-white">
+                            tahfidzulqurannurulikhlas@gmail.com
                         </a>
                     </div>
                 </div>

@@ -55,7 +55,7 @@
                         </li>
                         <li class="flex items-start gap-3">
                             <span class="mt-1 inline-flex h-6 w-6 items-center justify-center rounded-full bg-pondok-accent text-pondok-primary">2</span>
-                            SMA Islam Nurul Ikhlas
+                            SMA Nurul Ikhlas
                         </li>
                     </ul>
                 </div>
@@ -82,12 +82,7 @@
                             Belajar Kitab Kuning
                         </li>
                     </ul>
-                    <div class="mt-6 rounded-2xl bg-pondok-accent/40 p-4 text-sm text-pondok-primary">
-                        <p class="font-semibold">Kontak Program Unggulan</p>
-                        <a href="tel:+6281382408479" class="mt-1 inline-flex items-center gap-2 text-pondok-primary hover:text-pondok-secondary">
-                            Ust. Bahaudin &middot; 0813-8240-8479
-                        </a>
-                    </div>
+                    
                 </div>
 
                 <div class="rounded-3xl border border-pondok-primary/10 bg-white p-8 shadow-sm transition hover:-translate-y-1 hover:shadow-soft">
