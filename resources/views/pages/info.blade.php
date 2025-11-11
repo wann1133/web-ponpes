@@ -137,7 +137,7 @@
                         <span class="inline-flex items-center gap-2 rounded-full bg-white/15 px-4 py-1 text-xs font-semibold uppercase tracking-wide text-white/70">
                             Biaya Pendaftaran
                         </span>
-                        <h3 class="mt-4 text-4xl font-heading">Rp 250.000,00</h3>
+                        <h3 class="mt-4 text-4xl font-heading text-white">Rp 250.000,00</h3>
                         <p class="mt-3 text-sm text-white/80">
                             Biaya administrasi pendaftaran santri baru. Silakan lakukan konfirmasi pembayaran kepada panitia setelah menyerahkan berkas.
                         </p>
@@ -303,7 +303,7 @@
     <section id="contact" class="bg-gradient-to-br from-pondok-primary to-pondok-secondary py-16 text-white">
         <div class="mx-auto grid max-w-7xl gap-10 px-6 lg:grid-cols-[1.3fr,1fr] lg:px-10">
             <div class="space-y-5">
-                <h2 class="text-3xl font-heading md:text-4xl">Hubungi & Kunjungi Kami</h2>
+                <h2 class="text-3xl font-heading text-white md:text-4xl">Hubungi & Kunjungi Kami</h2>
                 <p class="text-sm text-pondok-accent/90">
                     Kami siap membantu menjawab pertanyaan seputar program, biaya pendidikan, fasilitas, maupun proses
                     pendaftaran santri baru. Silakan hubungi kami melalui kanal berikut atau datang langsung ke pesantren.
