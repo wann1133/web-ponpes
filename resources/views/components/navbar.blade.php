@@ -2,7 +2,7 @@
 
 @php
     $logoPath = null;
-    foreach (['logo.svg', 'logoo.jpg', 'logoo.png'] as $logoCandidate) {
+    foreach (['logo baru.png', 'logo.svg', 'logoo.jpg', 'logoo.png'] as $logoCandidate) {
         if (file_exists(public_path($logoCandidate))) {
             $logoPath = asset($logoCandidate);
             break;

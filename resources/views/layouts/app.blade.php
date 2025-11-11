@@ -28,7 +28,7 @@
 
     <title>@yield('title', 'Nurul Ikhlas | Pondok Pesantren Tahfidzul Qur\'an')</title>
 
-    <link rel="icon" type="image/svg+xml" href="{{ asset('logo.svg') }}">
+    <link rel="icon" type="image/png" href="{{ asset('logo baru.png') }}">
 
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 

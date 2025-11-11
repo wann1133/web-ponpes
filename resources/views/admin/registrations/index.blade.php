@@ -2,6 +2,8 @@
 
 @php
     use Illuminate\Support\Str;
+
+    $exportQuery = $jenjang ? ['jenjang' => $jenjang] : [];
 @endphp
 
 @section('title', 'Data Pendaftar | Panel Admin')
@@ -28,30 +30,46 @@
     </div>
 
     <section class="mt-8 rounded-3xl border border-pondok-primary/10 bg-white p-6 shadow-sm">
-        <header class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+        <header class="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
             <div>
                 <h2 class="text-sm font-semibold text-pondok-primary">Daftar Calon Santri</h2>
                 <p class="text-xs text-slate-500">Gunakan filter untuk menampilkan pendaftar per jenjang.</p>
             </div>
-            <form method="GET" class="flex items-center gap-3">
-                <select
-                    name="jenjang"
-                    class="rounded-full border border-gray-200 px-4 py-2 text-sm shadow-sm focus:border-pondok-primary focus:outline-none focus:ring-2 focus:ring-pondok-primary/40"
-                    onchange="this.form.submit()"
-                >
-                    <option value="" @if(!$jenjang) selected @endif>Semua Jenjang</option>
-                    <option value="smp" @if($jenjang === 'smp') selected @endif>Jenjang SMP</option>
-                    <option value="sma" @if($jenjang === 'sma') selected @endif>Jenjang SMA</option>
-                </select>
-                @if($jenjang)
-                    <a
-                        href="{{ route('admin.registrations.index') }}"
-                        class="text-xs font-semibold text-pondok-primary hover:text-pondok-secondary"
+            <div class="flex flex-col gap-3 sm:flex-row sm:items-center">
+                <form method="GET" class="flex items-center gap-3">
+                    <select
+                        name="jenjang"
+                        class="rounded-full border border-gray-200 px-4 py-2 text-sm shadow-sm focus:border-pondok-primary focus:outline-none focus:ring-2 focus:ring-pondok-primary/40"
+                        onchange="this.form.submit()"
                     >
-                        Reset
+                        <option value="" @if(!$jenjang) selected @endif>Semua Jenjang</option>
+                        <option value="smp" @if($jenjang === 'smp') selected @endif>Jenjang SMP</option>
+                        <option value="sma" @if($jenjang === 'sma') selected @endif>Jenjang SMA</option>
+                    </select>
+                    @if($jenjang)
+                        <a
+                            href="{{ route('admin.registrations.index') }}"
+                            class="text-xs font-semibold text-pondok-primary hover:text-pondok-secondary"
+                        >
+                            Reset
+                        </a>
+                    @endif
+                </form>
+                <div class="flex flex-col gap-2 sm:flex-row sm:items-center sm:gap-2">
+                    <a
+                        href="{{ route('admin.registrations.export.pdf', $exportQuery) }}"
+                        class="inline-flex items-center justify-center gap-2 rounded-full border border-pondok-primary px-4 py-2 text-xs font-semibold text-pondok-primary transition hover:bg-pondok-primary hover:text-white"
+                    >
+                        Export PDF
                     </a>
-                @endif
-            </form>
+                    <a
+                        href="{{ route('admin.registrations.export.excel', $exportQuery) }}"
+                        class="inline-flex items-center justify-center gap-2 rounded-full border border-pondok-secondary px-4 py-2 text-xs font-semibold text-pondok-secondary transition hover:bg-pondok-secondary hover:text-white"
+                    >
+                        Export Excel
+                    </a>
+                </div>
+            </div>
         </header>
 
         <div class="mt-6 overflow-x-auto">

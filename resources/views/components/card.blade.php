@@ -8,13 +8,13 @@
 ])
 
 @php
-    $linkClasses = 'transition hover:-translate-y-1 hover:shadow-soft focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-pondok-secondary/70 focus-visible:ring-offset-2';
-    $wrapperClasses = 'flex flex-col rounded-3xl border border-pondok-primary/10 bg-white/90 p-8 shadow-sm transition duration-200';
+    $linkClasses = 'h-full transition hover:-translate-y-1 hover:shadow-soft focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-pondok-secondary/70 focus-visible:ring-offset-2';
+    $wrapperClasses = 'flex h-full flex-col rounded-3xl border border-pondok-primary/10 bg-white/90 p-8 shadow-sm transition duration-200';
 @endphp
 
 <div @class([$linkClasses])>
     @if ($href)
-        <a href="{{ $href }}" class="block">
+        <a href="{{ $href }}" class="block h-full">
             <div @class([$wrapperClasses])>
                 @if ($tag)
                     <span class="inline-flex items-center rounded-full bg-pondok-accent px-3 py-1 text-xs font-semibold text-pondok-primary">

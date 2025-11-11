@@ -50,6 +50,10 @@ Route::middleware('auth')->prefix('admin')->name('admin.')->group(function () {
     Route::resource('faqs', AdminFaqController::class)->except(['show']);
     Route::resource('blog-posts', AdminBlogPostController::class)->except(['show']);
     Route::resource('registrations', AdminRegistrationController::class)->only(['index']);
+    Route::get('registrations/export/excel', [AdminRegistrationController::class, 'exportExcel'])
+        ->name('registrations.export.excel');
+    Route::get('registrations/export/pdf', [AdminRegistrationController::class, 'exportPdf'])
+        ->name('registrations.export.pdf');
 
     Route::get('info-page', [InfoPageController::class, 'edit'])->name('info-page.edit');
     Route::put('info-page', [InfoPageController::class, 'update'])->name('info-page.update');

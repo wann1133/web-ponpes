@@ -1,11 +1,13 @@
 @php
     $logoPath = null;
-    foreach (['logo.svg', 'logoo.jpg', 'logoo.png'] as $logoCandidate) {
+    foreach (['logo baru.png', 'logo.svg', 'logoo.jpg', 'logoo.png'] as $logoCandidate) {
         if (file_exists(public_path($logoCandidate))) {
             $logoPath = asset($logoCandidate);
             break;
         }
     }
+
+    $waMessage = urlencode('Halo admin PPTQ Nurul Ikhlas, saya sudah menyelesaikan pendaftaran melalui website. Mohon bantuannya untuk proses selanjutnya.');
 @endphp
 
 <footer id="contact" class="bg-pondok-primary text-white">
@@ -14,7 +16,7 @@
             @if ($logoPath)
                 <div class="flex">
                     <img src="{{ $logoPath }}" alt="Logo Pondok Pesantren Tahfidzul Qur'an Nurul Ikhlas"
-                        class="h-12 w-auto max-w-none object-contain sm:h-14">
+                        class="h-12 w-auto max-w-none object-contain drop-shadow-[0_10px_15px_rgba(0,0,0,0.35)] sm:h-14">
                 </div>
             @endif
             <p class="mt-4 max-w-sm text-sm text-pondok-accent/90">
@@ -63,10 +65,11 @@
                     </span>
                     <div>
                         <p class="font-medium text-white">Alamat</p>
-                        <p class="text-pondok-accent">
+                        <a href="https://maps.app.goo.gl/UWbBnZdLTYo9YLeb9" target="_blank" rel="noopener"
+                            class="text-pondok-accent underline-offset-4 hover:text-white hover:underline">
                             Jl. Pesantren No. 123, Desa Sejahtera, Kecamatan Cendikia,<br>
                             Kabupaten Bandung, Jawa Barat
-                        </p>
+                        </a>
                     </div>
                 </div>
             </div>
@@ -89,7 +92,7 @@
                         <path d="M16.707 4.04a5.51 5.51 0 01-.637-2.274h-2.76v11.606a2.725 2.725 0 11-2.366-2.7v-2.77a5.507 5.507 0 105.3 5.498V9.081a8.25 8.25 0 003.256.672V6.993a5.522 5.522 0 01-2.793-.823z" />
                     </svg>
                 </a>
-                <a href="https://wa.me/6281234567890" target="_blank" rel="noopener"
+                <a href="https://wa.me/6281234567890?text={{ $waMessage }}" target="_blank" rel="noopener"
                     class="inline-flex h-10 w-10 items-center justify-center rounded-full bg-white/15 transition hover:bg-white/25"
                     aria-label="WhatsApp">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
@@ -101,7 +104,7 @@
         </div>
 
         <div class="space-y-4">
-            <h4 class="font-heading text-xl">Navigasi Cepat</h4>
+            <h4 class="font-heading text-xl text-white">Navigasi Cepat</h4>
             <ul class="grid grid-cols-1 gap-3 text-sm text-pondok-accent">
                 <li><a href="{{ url('/') }}" class="transition hover:text-white">Beranda</a></li>
                 <li><a href="{{ url('/info') }}" class="transition hover:text-white">Informasi & Jadwal</a></li>
@@ -117,11 +120,11 @@
         </div>
 
         <div>
-            <h4 class="font-heading text-xl">Lokasi Pesantren</h4>
+            <h4 class="font-heading text-xl text-white">Lokasi Pesantren</h4>
             <div class="mt-4 overflow-hidden rounded-2xl shadow-soft">
                 <iframe
-                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3950.1131600501037!2d109.3059864!3d-8.080092099999999!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e7a0babe2a7b37f%3A0x8b769278e41b1a4c!2sPondok%20Pesantren!5e0!3m2!1sid!2sid!4v1698798476003!5m2!1sid!2sid"
-                    width="100%" height="260" style="border:0;" allowfullscreen="" loading="lazy"
+                    src="https://www.google.com/maps?q=-6.40875874,106.90078202&z=16&output=embed"
+                    width="100%" height="260" style="border:0;" allowfullscreen loading="lazy"
                     referrerpolicy="no-referrer-when-downgrade"></iframe>
             </div>
         </div>

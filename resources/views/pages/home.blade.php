@@ -100,12 +100,32 @@
         <div class="mx-auto grid max-w-7xl gap-12 px-6 lg:grid-cols-2 lg:items-center lg:px-10">
             <div class="space-y-6">
                 <h2 class="section-heading">Profil Singkat Pesantren</h2>
-                <p class="text-base text-gray-600">
-                    Pondok Pesantren Tahfidzul Qur'an Nurul Ikhlas berdiri untuk menghadirkan pendidikan Islam modern
-                    berbasis tahfidz, yang memadukan kurikulum diniyah terpadu, pembinaan karakter, dan penguatan life-skill
-                    santri. Lingkungan pesantren dirancang nyaman dan asri, mendukung fokus hafalan, belajar, sekaligus
-                    tumbuhnya kreativitas santri.
-                </p>
+                <div class="space-y-4 text-base text-gray-600">
+                    <p>
+                        Pesantren Tahfidzul Qur'an Nurul Ikhlas bernaung di bawah Yayasan Nurul Ikhlas yang sejak 1990
+                        bergerak melalui panti asuhan yatim-dhuafa, TPA, diniyah sore, dan majelis taklim ibu-ibu; legalitas
+                        yayasan disahkan 5 Januari 2000 oleh Abi KH. Abu Bakar Siddik, Ummi Hj. Rohmah, dan Abi KH. Bahrul
+                        Muhit dengan pelaksana Abi KH. Ahmad Junaedi.
+                    </p>
+                    <p>
+                        Pada 21 April 2021 Pondok Pesantren Tahfidzul Qur'an Nurul Ikhlas dan SMP Islam Nurul Ikhlas resmi
+                        diluncurkan, mengantongi Piagam Statistik Pesantren 510032760116 dari Kemenag serta izin SMP dari
+                        Pemerintah Kota Depok (NPSN 70034591, akreditasi BAN PDM predikat B) dan kini membuka SMA Nurul
+                        Ikhlas.
+                    </p>
+                    <p>
+                        Sejak beroperasi, pesantren melepas angkatan perdana santri tahfidz pada tahun ajaran 2023/2024 dan
+                        tahun ini mengukuhkan peserta pelepasan angkatan kedua tahun ajaran 2024/2025.
+                    </p>
+                    <p>
+                        Pembinaan menekankan ketekunan ibadah malam, disiplin hafalan meski sedikit demi sedikit, serta
+                        karakter santri yang menjadikan Al-Qur'an sebagai sahabat dan penerang hidup.
+                    </p>
+                    <p>
+                        Harapannya hafalan mereka menjadi cahaya kehidupan, pelindung di alam kubur, dan syafaat bagi semua
+                        hingga Yaumul Qiyamah.
+                    </p>
+                </div>
                 <ul class="space-y-4">
                     @foreach ($highlights as $highlight)
                         <li class="flex gap-3 text-sm text-gray-600">
@@ -218,6 +238,131 @@
                             </div>
                         </li>
                     </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    @php
+        $extracurriculars = [
+            [
+                'file' => 'pramuka.png',
+                'alt' => 'Kegiatan ekstrakurikuler pramuka santri Nurul Ikhlas',
+                'title' => 'Pramuka',
+                'description' => 'Melatih kepemimpinan, kedisiplinan, dan kemandirian santri melalui aktivitas lapangan terstruktur.',
+            ],
+            [
+                'file' => 'futsal putra.png',
+                'alt' => 'Latihan futsal putra Pondok Pesantren Nurul Ikhlas',
+                'title' => 'Futsal Putra',
+                'description' => 'Menjaga kebugaran sekaligus membangun sportivitas lewat kompetisi dan latihan rutin.',
+            ],
+            [
+                'file' => 'paskibra.png',
+                'alt' => 'Latihan paskibra santri Pondok Pesantren Nurul Ikhlas',
+                'title' => 'Paskibra',
+                'description' => 'Membina ketepatan, kekompakan, dan rasa cinta tanah air melalui baris-berbaris dan upacara.',
+            ],
+            [
+                'file' => 'Marawis.png',
+                'alt' => 'Penampilan marawis santri Nurul Ikhlas',
+                'title' => 'Marawis',
+                'description' => 'Menyalurkan bakat seni islami dengan tabuhan marawis dan shalawat penuh semangat.',
+            ],
+            [
+                'file' => 'hadroh.png',
+                'alt' => 'Latihan hadroh santri Pondok Pesantren Nurul Ikhlas',
+                'title' => 'Hadroh',
+                'description' => 'Mengenalkan musik tradisi bernuansa religius untuk memeriahkan setiap agenda pesantren.',
+            ],
+            [
+                'file' => 'silat putri.png',
+                'alt' => 'Ekstrakurikuler silat putri Pondok Pesantren Nurul Ikhlas',
+                'title' => 'Silat Putri',
+                'description' => 'Menguatkan fisik dan mental santri putri dengan jurus bela diri yang elegan dan tangguh.',
+            ],
+        ];
+        $extracurricularSlides = array_chunk($extracurriculars, 3);
+        if (! empty($extracurricularSlides)) {
+            $lastIndex = count($extracurricularSlides) - 1;
+            $missingItems = 3 - count($extracurricularSlides[$lastIndex]);
+            if ($missingItems > 0) {
+                for ($i = 0; $i < $missingItems && $i < count($extracurriculars); $i++) {
+                    $extracurricularSlides[$lastIndex][] = $extracurriculars[$i];
+                }
+            }
+        }
+    @endphp
+
+    <section id="ekstrakurikuler" class="bg-pondok-accent/40 py-16">
+        <div class="mx-auto max-w-7xl px-6 lg:px-10">
+            <div class="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+                <div>
+                    <h2 class="section-heading">Galeri Ekstrakurikuler</h2>
+                    <p class="text-sm text-gray-600">Suasana latihan dan penampilan eskul yang mendampingi pembinaan santri.</p>
+                </div>
+                <a href="#contact" class="btn-primary text-sm">Informasi Kegiatan Eskul</a>
+            </div>
+
+            <div class="relative mt-10"
+                x-data="galleryCarousel({ interval: 5000 })"
+                x-init="init()"
+                x-on:mouseenter="pause()"
+                x-on:mouseleave="resume()"
+            >
+                <div class="overflow-hidden" x-ref="container">
+                    <div class="flex" x-ref="track">
+                        @foreach ($extracurricularSlides as $slide)
+                            <div class="w-full flex-shrink-0">
+                                <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+                                    @foreach ($slide as $item)
+                                        <figure class="group relative overflow-hidden rounded-3xl border border-pondok-primary/10 bg-white shadow-soft transition hover:-translate-y-1 hover:shadow-lg">
+                                            <div class="aspect-[4/3] w-full overflow-hidden">
+                                                <img src="{{ asset(rawurlencode($item['file'])) }}" alt="{{ $item['alt'] }}"
+                                                    loading="lazy"
+                                                    class="h-full w-full object-cover transition duration-500 group-hover:scale-105">
+                                            </div>
+                                            <figcaption class="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent px-6 py-4 text-sm font-medium text-white">
+                                                {{ $item['title'] }}
+                                            </figcaption>
+                                        </figure>
+                                    @endforeach
+                                </div>
+                            </div>
+                        @endforeach
+                    </div>
+                </div>
+
+                <div class="pointer-events-none absolute inset-y-0 left-0 right-0 flex items-center justify-between px-3">
+                    <button type="button"
+                        class="pointer-events-auto inline-flex h-10 w-10 items-center justify-center rounded-full bg-white/80 text-pondok-primary shadow transition hover:bg-white"
+                        x-on:click="prev(); resume();"
+                        aria-label="Slide eskul sebelumnya">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
+                            stroke="currentColor" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
+                        </svg>
+                    </button>
+                    <button type="button"
+                        class="pointer-events-auto inline-flex h-10 w-10 items-center justify-center rounded-full bg-white/80 text-pondok-primary shadow transition hover:bg-white"
+                        x-on:click="next(); resume();"
+                        aria-label="Slide eskul selanjutnya">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
+                            stroke="currentColor" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5L15.75 12l-7.5 7.5" />
+                        </svg>
+                    </button>
+                </div>
+
+                <div class="mt-6 flex justify-center gap-2">
+                    <template x-for="index in total" :key="index">
+                        <button type="button"
+                            class="h-2 rounded-full transition"
+                            :class="index - 1 === current ? 'w-6 bg-pondok-primary' : 'w-2 bg-pondok-primary/40'"
+                            x-on:click="goTo(index - 1); resume();"
+                            :aria-label="`Pilih slide eskul ${index}`">
+                        </button>
+                    </template>
                 </div>
             </div>
         </div>
@@ -387,7 +532,7 @@
     <section class="bg-pondok-primary py-16">
         <div class="mx-auto flex max-w-7xl flex-col items-center gap-6 px-6 text-center text-white lg:flex-row lg:justify-between lg:px-10">
             <div class="max-w-3xl space-y-4">
-                <h2 class="text-3xl font-heading md:text-4xl">Siap Bergabung dengan Keluarga Besar Nurul Ikhlas?</h2>
+                <h2 class="text-3xl font-heading text-white md:text-4xl">Siap Bergabung dengan Keluarga Besar Nurul Ikhlas?</h2>
                 <p class="text-sm text-pondok-accent/90">
                     Segera daftarkan putra-putri Anda dan mari tumbuhkan generasi Qur’ani yang berwawasan luas, disiplin, dan
                     rendah hati. Kami menanti keluarga terbaik untuk bersama menebar cahaya Al-Qur’an.
@@ -397,7 +542,9 @@
                 <a href="{{ route('info') }}#pendaftaran" class="btn-primary bg-white text-pondok-primary hover:bg-pondok-accent hover:text-pondok-primary">
                     Informasi Pendaftaran
                 </a>
-                <a href="https://wa.me/6281234567890" target="_blank"
+                <a
+                    href="https://wa.me/6281234567890?text={{ urlencode('Halo admin PPTQ Nurul Ikhlas, saya sudah menyelesaikan pendaftaran melalui website. Mohon bantuannya untuk proses selanjutnya.') }}"
+                    target="_blank" rel="noopener"
                     class="inline-flex items-center gap-2 rounded-xl border border-white/60 px-6 py-3 text-sm font-semibold text-white transition hover:bg-white/10">
                     Konsultasi via WhatsApp
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24"

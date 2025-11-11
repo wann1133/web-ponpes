@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>@yield('title', 'Panel Admin | Nurul Ikhlas')</title>
 
-    <link rel="icon" type="image/svg+xml" href="{{ asset('logo.svg') }}">
+    <link rel="icon" type="image/png" href="{{ asset('logo baru.png') }}">
 
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     @stack('head')
@@ -14,7 +14,7 @@
 
     @php
         $logoPath = null;
-        foreach (['logo.svg', 'logoo.jpg', 'logoo.png'] as $logoCandidate) {
+        foreach (['logo baru.png', 'logo.svg', 'logoo.jpg', 'logoo.png'] as $logoCandidate) {
             if (file_exists(public_path($logoCandidate))) {
                 $logoPath = asset($logoCandidate);
                 break;

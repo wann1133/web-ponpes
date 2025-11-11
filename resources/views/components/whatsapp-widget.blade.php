@@ -16,6 +16,8 @@
             'display' => '0857-0743-9529',
         ],
     ];
+
+    $waMessage = urlencode('Halo admin PPTQ Nurul Ikhlas, saya sudah menyelesaikan pendaftaran melalui website. Mohon bantuannya untuk proses selanjutnya.');
 @endphp
 
 <div
@@ -55,7 +57,7 @@
             @foreach ($contacts as $contact)
                 <li>
                     <a
-                        href="https://wa.me/{{ $contact['number'] }}"
+                        href="https://wa.me/{{ $contact['number'] }}?text={{ $waMessage }}"
                         target="_blank"
                         rel="noopener"
                         class="flex items-center gap-3 rounded-2xl border border-pondok-primary/10 bg-pondok-accent px-3 py-3 text-left transition hover:-translate-y-0.5 hover:border-pondok-primary/30 hover:bg-pondok-primary/5 hover:shadow-soft"
