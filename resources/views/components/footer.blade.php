@@ -49,7 +49,7 @@
                     <div>
                         <p class="font-medium text-white">Telepon</p>
                         <a href="tel:+6281234567890" class="text-pondok-accent hover:text-white">
-                            +62 812-3456-7890
+                            +62 857-0743-9529
                         </a>
                     </div>
                 </div>
@@ -67,8 +67,8 @@
                         <p class="font-medium text-white">Alamat</p>
                         <a href="https://maps.app.goo.gl/UWbBnZdLTYo9YLeb9" target="_blank" rel="noopener"
                             class="text-pondok-accent underline-offset-4 hover:text-white hover:underline">
-                            Jl. Pesantren No. 123, Desa Sejahtera, Kecamatan Cendikia,<br>
-                            Kabupaten Bandung, Jawa Barat
+                            Jl. Leuwinanggung, Kec. Tapos,<br>
+                            Kota Depok, Jawa Barat 16456
                         </a>
                     </div>
                 </div>

@@ -226,8 +226,8 @@
                         <li class="flex gap-3">
                             <span class="mt-1 inline-flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-full bg-pondok-primary/10 font-semibold text-pondok-primary">2</span>
                             <div>
-                                <p class="font-medium text-pondok-primary">Spiritual Camp</p>
-                                <p>Malam bina iman dan taqwa (MABIT) dengan materi akhlak, leadership, dan tilawah malam.</p>
+                                <p class="font-medium text-pondok-primary">Muhadhoroh</p>
+                                <p>Pembinaan keimanan, akhlak, dan kepemimpinan santri melalui kegiatan ceramah, tilawah malam, serta latihan berbicara di depan umum dalam suasana penuh makna dan kekeluargaan.</p>
                             </div>
                         </li>
                         <li class="flex gap-3">
