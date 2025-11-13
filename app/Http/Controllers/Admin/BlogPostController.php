@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\BlogPostRequest;
 use App\Models\BlogPost;
+use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
@@ -36,7 +38,7 @@ class BlogPostController extends Controller
         $data = $this->prepareData($request->validated());
 
         if ($request->hasFile('thumbnail')) {
-            $data['thumbnail_path'] = $request->file('thumbnail')->store('blog', 'public');
+            $data['thumbnail_path'] = $this->storeThumbnail($request->file('thumbnail'));
         }
 
         unset($data['thumbnail'], $data['remove_thumbnail']);
@@ -81,8 +83,7 @@ class BlogPostController extends Controller
         }
 
         if ($request->hasFile('thumbnail')) {
-            $this->deleteThumbnail($blogPost);
-            $data['thumbnail_path'] = $request->file('thumbnail')->store('blog', 'public');
+            $data['thumbnail_path'] = $this->storeThumbnail($request->file('thumbnail'), $blogPost);
         }
 
         unset($data['thumbnail'], $data['remove_thumbnail']);
@@ -129,6 +130,26 @@ class BlogPostController extends Controller
         return $data;
     }
 
+    private function storeThumbnail(UploadedFile $file, ?BlogPost $existing = null): string
+    {
+        if ($existing) {
+            $this->deleteThumbnail($existing);
+        }
+
+        $directory = public_path('images/blog');
+
+        if (! File::isDirectory($directory)) {
+            File::makeDirectory($directory, 0755, true);
+        }
+
+        $extension = $file->getClientOriginalExtension() ?: $file->extension() ?: 'jpg';
+        $filename = Str::uuid()->toString().'.'.strtolower($extension);
+
+        $file->move($directory, $filename);
+
+        return 'images/blog/'.$filename;
+    }
+
     private function deleteThumbnail(BlogPost $post): void
     {
         $path = $post->thumbnail_path;
@@ -139,6 +160,13 @@ class BlogPostController extends Controller
 
         if (Storage::disk('public')->exists($path)) {
             Storage::disk('public')->delete($path);
+            return;
+        }
+
+        $publicPath = public_path($path);
+
+        if (File::exists($publicPath)) {
+            File::delete($publicPath);
         }
     }
 }
