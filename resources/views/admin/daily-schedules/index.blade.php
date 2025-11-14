@@ -36,8 +36,7 @@
                                     class="inline-flex items-center gap-1 rounded-full bg-pondok-primary/10 px-3 py-1 font-semibold text-pondok-primary transition hover:bg-pondok-primary hover:text-white">
                                     Edit
                                 </a>
-                                <form action="{{ route('admin.daily-schedules.destroy', $schedule) }}" method="POST"
-                                    onsubmit="return confirm('Hapus jadwal ini?');">
+                                <form action="{{ route('admin.daily-schedules.destroy', $schedule) }}" method="POST" data-confirm-delete="Hapus jadwal ini?">
                                     @csrf
                                     @method('DELETE')
                                     <button type="submit"

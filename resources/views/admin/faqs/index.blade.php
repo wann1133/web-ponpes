@@ -32,8 +32,7 @@
                             class="inline-flex items-center gap-1 rounded-full bg-pondok-primary/10 px-3 py-1 font-semibold text-pondok-primary transition hover:bg-pondok-primary hover:text-white">
                             Edit
                         </a>
-                        <form action="{{ route('admin.faqs.destroy', $faq) }}" method="POST"
-                            onsubmit="return confirm('Hapus FAQ ini?');">
+                        <form action="{{ route('admin.faqs.destroy', $faq) }}" method="POST" data-confirm-delete="Hapus FAQ ini?">
                             @csrf
                             @method('DELETE')
                             <button type="submit"

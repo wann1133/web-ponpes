@@ -129,6 +129,33 @@
         </div>
     </div>
 
+    <div id="adminConfirmDeleteModal" class="fixed inset-0 z-50 hidden" role="dialog" aria-modal="true" aria-labelledby="adminConfirmDeleteTitle" aria-hidden="true">
+        <div class="absolute inset-0 bg-slate-900/40" data-confirm-dismiss></div>
+        <div class="relative flex min-h-full min-w-full items-center justify-center p-4">
+            <div class="w-full max-w-md rounded-2xl bg-white p-6 text-left shadow-xl">
+                <div class="flex items-start gap-3">
+                    <div class="flex h-10 w-10 items-center justify-center rounded-full bg-red-100 text-red-600">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4m0 4h.01M21 12.75a8.25 8.25 0 11-16.5 0 8.25 8.25 0 0116.5 0z" />
+                        </svg>
+                    </div>
+                    <div>
+                        <h3 id="adminConfirmDeleteTitle" class="text-lg font-semibold text-slate-900">Hapus Data</h3>
+                        <p class="mt-1 text-sm text-slate-500" data-confirm-message>Yakin ingin menghapus data ini? Tindakan tidak dapat dibatalkan.</p>
+                    </div>
+                </div>
+                <div class="mt-6 flex flex-wrap justify-end gap-2">
+                    <button type="button" class="inline-flex items-center gap-1 rounded-full border border-slate-300 px-4 py-2 text-sm font-semibold text-slate-600 transition hover:bg-slate-100" data-confirm-dismiss>
+                        Batal
+                    </button>
+                    <button type="button" class="inline-flex items-center gap-1 rounded-full bg-red-600 px-4 py-2 text-sm font-semibold text-white transition hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500/50" data-confirm-accept>
+                        Hapus
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     @stack('scripts')
 
     <script>
@@ -156,6 +183,77 @@
                 if (window.innerWidth >= 1024 && isHidden) {
                     setSidebarState(true);
                 }
+            });
+        });
+    </script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const modal = document.getElementById('adminConfirmDeleteModal');
+            if (!modal) {
+                return;
+            }
+
+            const messageElement = modal.querySelector('[data-confirm-message]');
+            const acceptButton = modal.querySelector('[data-confirm-accept]');
+            const dismissTriggers = modal.querySelectorAll('[data-confirm-dismiss]');
+            const deleteForms = document.querySelectorAll('form[data-confirm-delete]');
+            const defaultMessage = 'Yakin ingin menghapus data ini? Tindakan tidak dapat dibatalkan.';
+            let formPendingConfirmation = null;
+
+            if (deleteForms.length === 0 || !acceptButton) {
+                return;
+            }
+
+            const hideModal = () => {
+                modal.classList.add('hidden');
+                modal.setAttribute('aria-hidden', 'true');
+                document.body.classList.remove('overflow-hidden');
+                formPendingConfirmation = null;
+            };
+
+            const showModal = (message) => {
+                modal.classList.remove('hidden');
+                modal.removeAttribute('aria-hidden');
+                document.body.classList.add('overflow-hidden');
+                if (messageElement) {
+                    messageElement.textContent = message || defaultMessage;
+                }
+                acceptButton.focus();
+            };
+
+            dismissTriggers.forEach((trigger) => {
+                trigger.addEventListener('click', () => hideModal());
+            });
+
+            window.addEventListener('keydown', (event) => {
+                if (event.key === 'Escape' && !modal.classList.contains('hidden')) {
+                    hideModal();
+                }
+            });
+
+            deleteForms.forEach((form) => {
+                form.addEventListener('submit', (event) => {
+                    if (form.dataset.confirmed === 'true') {
+                        delete form.dataset.confirmed;
+                        return;
+                    }
+
+                    event.preventDefault();
+                    formPendingConfirmation = form;
+                    showModal(form.dataset.confirmDelete || defaultMessage);
+                });
+            });
+
+            acceptButton.addEventListener('click', () => {
+                if (!formPendingConfirmation) {
+                    hideModal();
+                    return;
+                }
+
+                formPendingConfirmation.dataset.confirmed = 'true';
+                formPendingConfirmation.requestSubmit();
+                hideModal();
             });
         });
     </script>
