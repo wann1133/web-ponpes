@@ -3,6 +3,7 @@
     @section('title', 'Info Pesantren | Pondok Pesantren Nurul Ikhlas')
     @section('meta_description', 'Informasi kegiatan, pengumuman terbaru, jadwal harian, dan kontak resmi Pondok Pesantren Tahfidzul Qur\'an Nurul Ikhlas.')
 
+<<<<<<< HEAD
     @section('content')
         <section class="bg-gradient-to-br from-pondok-accent via-white to-pondok-accent py-20">
             <div class="mx-auto max-w-7xl px-6 lg:px-10">
@@ -18,6 +19,140 @@
                         </h1>
                         <p class="text-base text-gray-600">
                             {{ $settings->hero_description ?? 'Jadwal rutin, program unggulan, serta informasi pendaftaran santri baru yang dirancang untuk mendukung perjalanan tahfidzul Qur\'an dan pembinaan karakter santri.' }}
+=======
+@section('content')
+    <section class="bg-gradient-to-br from-pondok-accent via-white to-pondok-accent py-20">
+        <div class="mx-auto max-w-7xl px-6 lg:px-10">
+            <span class="inline-flex items-center gap-2 rounded-full bg-pondok-primary/10 px-4 py-1 text-sm font-semibold text-pondok-primary">
+                Informasi Terbaru
+                <span class="h-1 w-1 rounded-full bg-pondok-primary/60"></span>
+                {{ now()->translatedFormat('d F Y') }}
+            </span>
+            <div class="mt-6 flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
+                <div class="max-w-3xl space-y-4">
+                    <h1 class="text-4xl font-heading text-pondok-primary md:text-5xl">
+                        {{ $settings->hero_title ?? 'Kegiatan & Pengumuman Pondok Pesantren Nurul Ikhlas' }}
+                    </h1>
+                    <p class="text-base text-gray-600">
+                        {{ $settings->hero_description ?? 'Jadwal rutin, program unggulan, serta informasi pendaftaran santri baru yang dirancang untuk mendukung perjalanan tahfidzul Qur\'an dan pembinaan karakter santri.' }}
+                    </p>
+                </div>
+                <a id="pendaftaran" href="{{ route('pendaftaran.index') }}"
+                    class="btn-primary w-fit text-sm">
+                    Form Pendaftaran Online
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <section class="bg-white py-16">
+        <div class="mx-auto max-w-7xl px-6 lg:px-10">
+            <div class="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+                <div>
+                    <h2 class="section-heading">Program Pendidikan & Fasilitas</h2>
+                    <p class="text-sm text-gray-600">
+                        Gambaran ringkas jenjang pendidikan, program unggulan, serta fasilitas yang disiapkan Pondok Pesantren Tahfidzul Qur'an Nurul Ikhlas.
+                    </p>
+                </div>
+            </div>
+
+            <div class="mt-10 grid gap-6 lg:grid-cols-3">
+                <div class="rounded-3xl border border-pondok-primary/10 bg-white p-8 shadow-sm transition hover:-translate-y-1 hover:shadow-soft">
+                    <div class="flex items-center gap-2 text-pondok-primary">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v12m6-6H6" />
+                        </svg>
+                        <span class="text-sm font-semibold uppercase tracking-wide">Program Pendidikan</span>
+                    </div>
+                    <h3 class="mt-4 text-2xl font-semibold text-pondok-primary">Membentuk Generasi Qur'ani</h3>
+                    <ul class="mt-6 space-y-3 text-sm text-gray-600">
+                        <li class="flex items-start gap-3">
+                            <span class="mt-1 inline-flex h-6 w-6 items-center justify-center rounded-full bg-pondok-accent text-pondok-primary">1</span>
+                            SMP Islam Nurul Ikhlas
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <span class="mt-1 inline-flex h-6 w-6 items-center justify-center rounded-full bg-pondok-accent text-pondok-primary">2</span>
+                            SMA Nurul Ikhlas
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="rounded-3xl border border-pondok-primary/10 bg-white p-8 shadow-sm transition hover:-translate-y-1 hover:shadow-soft">
+                    <div class="flex items-center gap-2 text-pondok-primary">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 8c1.5-2 4-2 5.5 0A3.5 3.5 0 0112 15.5v2.75M12 8c-1.5-2-4-2-5.5 0A3.5 3.5 0 0012 15.5v2.75" />
+                        </svg>
+                        <span class="text-sm font-semibold uppercase tracking-wide">Program Unggulan</span>
+                    </div>
+                    <h3 class="mt-4 text-2xl font-semibold text-pondok-primary">Pembinaan Karakter Qur'ani</h3>
+                    <ul class="mt-6 space-y-3 text-sm text-gray-600">
+                        <li class="flex items-start gap-3">
+                            <span class="mt-1 inline-flex h-2 w-2 rounded-full bg-pondok-primary"></span>
+                            Tahfidzul Qur'an
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <span class="mt-1 inline-flex h-2 w-2 rounded-full bg-pondok-primary"></span>
+                            Seni membaca Al-Qur'an
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <span class="mt-1 inline-flex h-2 w-2 rounded-full bg-pondok-primary"></span>
+                            Belajar Kitab Kuning
+                        </li>
+                    </ul>
+                    
+                </div>
+
+                <div class="rounded-3xl border border-pondok-primary/10 bg-white p-8 shadow-sm transition hover:-translate-y-1 hover:shadow-soft">
+                    <div class="flex items-center gap-2 text-pondok-primary">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M3 7.5l9-4.5 9 4.5-9 4.5L3 7.5zm0 9l9 4.5 9-4.5m-9-4.5l9 4.5M12 7.5V3" />
+                        </svg>
+                        <span class="text-sm font-semibold uppercase tracking-wide">Fasilitas Pesantren</span>
+                    </div>
+                    <h3 class="mt-4 text-2xl font-semibold text-pondok-primary">Lingkungan Belajar Nyaman</h3>
+                    <ul class="mt-6 grid gap-2 text-sm text-gray-600 sm:grid-cols-2">
+                        <li class="flex items-center gap-2">
+                            <span class="inline-block h-1.5 w-1.5 rounded-full bg-pondok-primary"></span>
+                            Gedung asrama
+                        </li>
+                        <li class="flex items-center gap-2">
+                            <span class="inline-block h-1.5 w-1.5 rounded-full bg-pondok-primary"></span>
+                            Lapangan olahraga
+                        </li>
+                        <li class="flex items-center gap-2">
+                            <span class="inline-block h-1.5 w-1.5 rounded-full bg-pondok-primary"></span>
+                            Jaringan Wi-Fi / internet
+                        </li>
+                        <li class="flex items-center gap-2">
+                            <span class="inline-block h-1.5 w-1.5 rounded-full bg-pondok-primary"></span>
+                            Koperasi pesantren
+                        </li>
+                        <li class="flex items-center gap-2">
+                            <span class="inline-block h-1.5 w-1.5 rounded-full bg-pondok-primary"></span>
+                            Majelis putera & puteri
+                        </li>
+                        <li class="flex items-center gap-2">
+                            <span class="inline-block h-1.5 w-1.5 rounded-full bg-pondok-primary"></span>
+                            Bus pesantren
+                        </li>
+                        <li class="flex items-center gap-2 sm:col-span-2">
+                            <span class="inline-block h-1.5 w-1.5 rounded-full bg-pondok-primary"></span>
+                            Kantin santri
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="mt-10 grid gap-6 lg:grid-cols-[1fr_1.2fr]">
+                <div class="flex flex-col justify-between rounded-3xl border border-pondok-primary/10 bg-gradient-to-br from-pondok-primary to-pondok-secondary p-8 text-white shadow-soft">
+                    <div>
+                        <span class="inline-flex items-center gap-2 rounded-full bg-white/15 px-4 py-1 text-xs font-semibold uppercase tracking-wide text-white/70">
+                            Biaya Pendaftaran
+                        </span>
+                        <h3 class="mt-4 text-4xl font-heading text-white">Rp 250.000,00</h3>
+                        <p class="mt-3 text-sm text-white/80">
+                            Biaya administrasi pendaftaran santri baru. Silakan lakukan konfirmasi pembayaran kepada panitia setelah menyerahkan berkas.
+>>>>>>> ecbb9bce85b9933fddde04c922e5bc5b11fda3c7
                         </p>
                     </div>
                     <a id="pendaftaran" href="{{ route('pendaftaran.index') }}"

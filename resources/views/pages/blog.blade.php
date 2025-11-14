@@ -77,7 +77,7 @@
                     <div class="mt-6 rounded-3xl bg-pondok-primary p-6 text-sm text-white shadow-soft">
                         <p class="font-semibold">Ingin Berkontribusi?</p>
                         <p class="mt-2 text-pondok-accent/90">Kirim tulisan atau kabar kegiatan ke email humas kami.</p>
-                        <a href="mailto:info@nurulikhlas.sch.id"
+                        <a href="mailto:tahfidzulqurannurulikhlas@gmail.com"
                             class="mt-4 inline-flex items-center gap-2 text-sm font-semibold text-white hover:text-pondok-accent">
                             Email Humas
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24"
@@ -129,6 +129,5 @@
         </div>
     </section>
 @endsection
-
 
 

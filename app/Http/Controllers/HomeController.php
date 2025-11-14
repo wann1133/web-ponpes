@@ -21,12 +21,12 @@ class HomeController extends Controller
 
         $programs = [
             [
-                'title' => 'Program Tahfidz 30 Juz',
+                'title' => 'Program Tahfidz',
                 'description' => 'Pembinaan intensif dengan target hafalan harian, murajaah terstruktur, dan evaluasi bulanan.',
                 'icon' => '<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6V4m0 2a2 2 0 110 4m0-4v4m0 0h.01M12 14v6m0-6a2 2 0 100 4m0-4V6m0 14a2 2 0 11-4 0m4 0a2 2 0 104 0m-4 0h.01"/></svg>',
             ],
             [
-                'title' => 'Madrasah Diniyah Terpadu',
+                'title' => 'Kitab Kuning',
                 'description' => 'Kurikulum diniyah modern yang mengintegrasikan kajian kitab, bahasa Arab, dan pembinaan karakter Islami.',
                 'icon' => '<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6.75c-1.148 0-2.083.935-2.083 2.083 0 1.148.935 2.084 2.083 2.084s2.083-.936 2.083-2.084A2.083 2.083 0 0012 6.75z"/><path stroke-linecap="round" stroke-linejoin="round" d="M19.25 9.75a7.25 7.25 0 11-14.5 0 7.25 7.25 0 0114.5 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M12 16.25v4.5"/></svg>',
             ],
@@ -56,7 +56,7 @@ class HomeController extends Controller
         ];
 
         $highlights = [
-            'Pesantren modern dengan program tahfidz terukur dan pendampingan personal setiap santri.',
+            'Pesantren dengan program tahfidz terukur dengan pendampingan yang berkompeten dan sesuai sunah .',
             'Lingkungan asri, nyaman, dan kondusif untuk menghafal dan memahami Al-Qur\'an.',
             'Didukung pengajar bersanad dan kurikulum integratif antara diniyah dan akademik umum.',
         ];
