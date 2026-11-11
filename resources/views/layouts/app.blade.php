@@ -23,7 +23,7 @@
         content="@yield('og_description', 'Pesantren tahfidz dengan program unggulan tahfidzul Qur\'an, diniyah, dan pengembangan karakter Islami.')">
     <meta property="og:type" content="website">
     <meta property="og:url" content="{{ url()->current() }}">
-    <meta property="og:image" content="{{ asset('images/pondok-hero.jpg') }}">
+    <meta property="og:image" content="@yield('og_image', asset('images/pondok-hero.jpg'))">
     <meta name="twitter:card" content="summary_large_image">
 
     <title>@yield('title', 'Nurul Ikhlas | Pondok Pesantren Tahfidzul Qur\'an')</title>
