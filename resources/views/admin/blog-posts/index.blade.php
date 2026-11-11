@@ -30,7 +30,14 @@
                     <tr class="hover:bg-pondok-accent/40">
                         <td class="px-6 py-4">
                             <p class="font-semibold text-pondok-primary">{{ $post->title }}</p>
-                            <p class="mt-1 text-xs text-slate-500">{{ $post->formatted_date }}</p>
+                            <div class="mt-1 flex flex-wrap items-center gap-2 text-xs text-slate-500">
+                                <span>{{ $post->formatted_date ?? 'Belum diterbitkan' }}</span>
+                                @if (($post->photos_count ?? 0) > 0)
+                                    <span class="inline-flex items-center gap-1 rounded-full bg-pondok-primary/10 px-2 py-0.5 text-[11px] font-semibold text-pondok-primary">
+                                        {{ $post->photos_count }} foto
+                                    </span>
+                                @endif
+                            </div>
                         </td>
                         <td class="px-6 py-4 text-xs text-slate-500">{{ $post->category ?? '-' }}</td>
                         <td class="px-6 py-4 text-xs text-slate-500">{{ $post->author ?? '-' }}</td>
