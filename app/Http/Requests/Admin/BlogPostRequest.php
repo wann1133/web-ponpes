@@ -41,8 +41,27 @@ class BlogPostRequest extends FormRequest
             'published_at' => ['nullable', 'date'],
             'is_published' => ['sometimes', 'boolean'],
             'is_featured' => ['sometimes', 'boolean'],
-            'thumbnail' => ['nullable', 'image', 'max:5120'],
+            'thumbnail' => ['nullable', 'image', 'mimes:jpg,jpeg,png,webp', 'max:10240'],
             'remove_thumbnail' => ['sometimes', 'boolean'],
+            'gallery_photos' => ['nullable', 'array', 'max:20'],
+            'gallery_photos.*' => ['image', 'mimes:jpg,jpeg,png,webp', 'max:10240'],
+            'existing_photo_order' => ['nullable', 'array'],
+            'existing_photo_order.*' => ['integer'],
+            'delete_photo_ids' => ['nullable', 'array'],
+            'delete_photo_ids.*' => ['integer'],
+        ];
+    }
+
+    public function messages(): array
+    {
+        return [
+            'thumbnail.image' => 'Thumbnail harus berupa file gambar yang valid.',
+            'thumbnail.mimes' => 'Format thumbnail harus JPG, JPEG, PNG, atau WebP.',
+            'thumbnail.max' => 'Ukuran thumbnail maksimal 10 MB.',
+            'gallery_photos.max' => 'Maksimal 20 foto galeri dalam satu kali unggah (Anda bisa menambah lagi setelah disimpan).',
+            'gallery_photos.*.image' => 'Semua file galeri harus berupa gambar yang valid.',
+            'gallery_photos.*.mimes' => 'Format foto galeri harus JPG, JPEG, PNG, atau WebP.',
+            'gallery_photos.*.max' => 'Ukuran setiap foto galeri maksimal 10 MB.',
         ];
     }
 
