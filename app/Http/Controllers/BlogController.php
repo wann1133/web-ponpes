@@ -15,6 +15,8 @@ class BlogController extends Controller
         Carbon::setLocale('id');
 
         $posts = BlogPost::published()
+            ->withCount('photos')
+            ->with('firstPhoto')
             ->orderByDesc('published_at')
             ->get();
 
@@ -39,7 +41,13 @@ class BlogController extends Controller
             abort(Response::HTTP_NOT_FOUND);
         }
 
+        Carbon::setLocale('id');
+
+        $post->load('photos');
+
         $recent = BlogPost::published()
+            ->withCount('photos')
+            ->with('firstPhoto')
             ->where('id', '!=', $post->id)
             ->orderByDesc('published_at')
             ->take(4)
