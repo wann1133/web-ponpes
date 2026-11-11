@@ -171,17 +171,26 @@
                                 </div>
 
                                 <div
-                                    class="relative flex min-h-[260px] flex-1 items-center justify-center overflow-hidden bg-slate-100/80 px-2 py-3 sm:min-h-[380px] sm:px-16 sm:py-5"
+                                    class="relative h-[52vh] w-full overflow-hidden bg-slate-900/10 sm:h-[62vh]"
                                     x-on:touchstart.passive="onTouchStart($event)"
                                     x-on:touchmove.passive="onTouchMove($event)"
                                     x-on:touchend="onTouchEnd($event)"
                                 >
+                                    <img
+                                        :src="currentPhoto.url"
+                                        alt=""
+                                        aria-hidden="true"
+                                        draggable="false"
+                                        class="pointer-events-none absolute inset-0 h-full w-full scale-110 object-cover opacity-35 blur-2xl"
+                                    >
+                                    <div class="pointer-events-none absolute inset-0 bg-white/15"></div>
+
                                     <template x-if="photos.length > 1">
                                         <button
                                             type="button"
                                             x-on:click.stop="prev()"
                                             aria-label="Foto sebelumnya"
-                                            class="absolute left-2 z-10 inline-flex h-10 w-10 items-center justify-center rounded-full border border-pondok-primary/15 bg-white/90 text-pondok-primary shadow-md backdrop-blur-sm transition hover:bg-pondok-primary hover:text-white focus:outline-none focus:ring-2 focus:ring-pondok-primary/40 sm:left-4 sm:h-11 sm:w-11"
+                                            class="absolute left-3 top-1/2 z-10 inline-flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full border border-pondok-primary/15 bg-white/85 text-pondok-primary shadow-md backdrop-blur-sm transition hover:bg-pondok-primary hover:text-white focus:outline-none focus:ring-2 focus:ring-pondok-primary/40 sm:left-4 sm:h-11 sm:w-11"
                                         >
                                             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
                                                 stroke="currentColor" stroke-width="2">
@@ -191,14 +200,14 @@
                                     </template>
 
                                     <div
-                                        class="flex max-h-full max-w-full items-center justify-center"
+                                        class="relative z-[1] flex h-full w-full items-center justify-center"
                                         :style="dragStyle"
                                     >
                                         <img
                                             :src="currentPhoto.url"
                                             :alt="currentPhoto.alt"
                                             draggable="false"
-                                            class="max-h-[54vh] w-auto max-w-full rounded-2xl object-contain shadow-lg sm:max-h-[60vh]"
+                                            class="h-full w-full object-contain drop-shadow-md"
                                         >
                                     </div>
 
@@ -207,7 +216,7 @@
                                             type="button"
                                             x-on:click.stop="next()"
                                             aria-label="Foto berikutnya"
-                                            class="absolute right-2 z-10 inline-flex h-10 w-10 items-center justify-center rounded-full border border-pondok-primary/15 bg-white/90 text-pondok-primary shadow-md backdrop-blur-sm transition hover:bg-pondok-primary hover:text-white focus:outline-none focus:ring-2 focus:ring-pondok-primary/40 sm:right-4 sm:h-11 sm:w-11"
+                                            class="absolute right-3 top-1/2 z-10 inline-flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full border border-pondok-primary/15 bg-white/85 text-pondok-primary shadow-md backdrop-blur-sm transition hover:bg-pondok-primary hover:text-white focus:outline-none focus:ring-2 focus:ring-pondok-primary/40 sm:right-4 sm:h-11 sm:w-11"
                                         >
                                             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
                                                 stroke="currentColor" stroke-width="2">
