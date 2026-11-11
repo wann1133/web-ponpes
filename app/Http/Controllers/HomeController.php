@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\BlogPost;
+use App\Models\InfoPageSetting;
 use Carbon\Carbon;
 use Illuminate\View\View;
 
@@ -68,6 +69,8 @@ class HomeController extends Controller
             ->take(3)
             ->get();
 
-        return view('pages.home', compact('statistics', 'programs', 'values', 'highlights', 'blogPosts'));
+        $settings = InfoPageSetting::current();
+
+        return view('pages.home', compact('statistics', 'programs', 'values', 'highlights', 'blogPosts', 'settings'));
     }
 }
