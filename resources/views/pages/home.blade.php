@@ -4,30 +4,95 @@
 @section('meta_description', 'Profil singkat Pondok Pesantren Tahfidzul Qur\'an Nurul Ikhlas dengan program tahfidz, visi misi, nilai keikhlasan, dan informasi terbaru kegiatan pesantren.')
 
 @section('content')
-    <div
-        x-data="promoModal()"
-        x-init="init()"
-        x-show="visible"
-        x-transition.opacity
-        x-cloak
-        class="fixed inset-0 z-[70] flex items-center justify-center bg-black/60 p-4 sm:p-8"
-    >
-        <div class="relative w-full max-w-xl overflow-hidden rounded-3xl bg-white shadow-2xl md:max-w-2xl">
-            <button
-                type="button"
-                class="absolute right-4 top-4 inline-flex h-9 w-9 items-center justify-center rounded-full bg-black/70 text-white transition hover:bg-black focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white/70"
-                x-on:click="dismiss()"
-                aria-label="Tutup brosur pendaftaran"
+    @php
+        $settings = $settings ?? \App\Models\InfoPageSetting::current();
+        $brochures = $settings->resolved_brochures;
+        $hasBrochures = count($brochures) > 0;
+        $promoBannerUrl = $settings->promo_banner_url;
+        $promoAutoCloseMs = max(0, (int) ($settings->promo_auto_close_seconds ?? 0)) * 1000;
+    @endphp
+
+    @if ($settings->is_promo_enabled)
+        <div
+            x-data="promoModal({ autoCloseMs: {{ $promoAutoCloseMs }} })"
+            x-init="init()"
+            x-show="visible"
+            x-transition.opacity.duration.200ms
+            x-cloak
+            x-on:click.self="dismiss()"
+            x-on:keydown.escape.window="visible && dismiss()"
+            role="dialog"
+            aria-modal="true"
+            aria-label="Informasi Pendaftaran Santri Baru"
+            class="fixed inset-0 z-[70] flex items-center justify-center bg-slate-900/55 p-3 backdrop-blur-sm sm:p-6"
+        >
+            <div
+                x-show="visible"
+                x-transition:enter="transition ease-out duration-200"
+                x-transition:enter-start="opacity-0 scale-95 translate-y-2"
+                x-transition:enter-end="opacity-100 scale-100 translate-y-0"
+                x-on:click.stop
+                class="relative flex max-h-[92vh] w-full max-w-md flex-col overflow-hidden rounded-3xl border border-white/60 bg-white/95 p-2.5 shadow-2xl backdrop-blur-xl sm:max-w-lg sm:p-3"
             >
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                    stroke-width="1.8" class="h-4 w-4">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
-                </svg>
-            </button>
-            <img src="{{ asset('poster.png') }}" alt="Brosur Pendaftaran Pondok Pesantren Tahfidzul Qur'an Nurul Ikhlas"
-                class="h-auto w-full object-cover">
+                <button
+                    type="button"
+                    class="absolute right-4 top-4 z-10 inline-flex h-9 w-9 items-center justify-center rounded-full bg-white/95 text-slate-700 shadow-md transition hover:bg-pondok-primary hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-pondok-primary"
+                    x-on:click="dismiss()"
+                    aria-label="Tutup banner pendaftaran"
+                >
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        stroke-width="2" class="h-4 w-4">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                </button>
+
+                <a href="{{ $settings->effective_promo_link }}" class="block overflow-hidden rounded-2xl bg-pondok-accent">
+                    <img
+                        src="{{ $promoBannerUrl }}"
+                        alt="Banner Pendaftaran Pondok Pesantren Tahfidzul Qur'an Nurul Ikhlas"
+                        class="max-h-[72vh] w-full object-contain"
+                    >
+                </a>
+
+                <div class="mt-2.5 flex flex-wrap items-center justify-center gap-2 px-1 pb-1">
+                    @if ($hasBrochures)
+                        <button
+                            type="button"
+                            x-on:click="openBrochures()"
+                            class="inline-flex flex-1 items-center justify-center gap-2 rounded-xl border border-pondok-primary/25 bg-pondok-accent px-4 py-2.5 text-xs font-semibold text-pondok-primary transition hover:border-pondok-primary hover:bg-pondok-primary/10 sm:text-sm"
+                        >
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M12 6.042A8.967 8.967 0 006 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 016 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 016-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0018 18a8.967 8.967 0 00-6 2.292m0-14.25v14.25" />
+                            </svg>
+                            Lihat Brosur
+                        </button>
+                    @endif
+                    <a
+                        href="{{ $settings->effective_promo_link }}"
+                        class="inline-flex flex-1 items-center justify-center gap-2 rounded-xl bg-pondok-primary px-4 py-2.5 text-xs font-semibold text-white shadow-sm transition hover:bg-pondok-secondary sm:text-sm"
+                    >
+                        Daftar Sekarang
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M17.25 8.25L21 12l-3.75 3.75M21 12H3" />
+                        </svg>
+                    </a>
+                </div>
+            </div>
         </div>
-    </div>
+    @endif
+
+    @if ($hasBrochures)
+        <x-image-lightbox
+            id="brosur-psb"
+            :photos="$brochures"
+            title="Brosur Resmi Pendaftaran Santri Baru"
+            subtitle="Ketuk panah atau geser untuk melihat halaman brosur"
+            item-label="Brosur"
+            :downloadable="true"
+            :cta-url="$settings->effective_promo_link"
+            cta-label="Daftar Sekarang"
+        />
+    @endif
 @php
     $heroImage = null;
     $heroCandidates = [
@@ -75,6 +140,19 @@
                     <a href="{{ route('info') }}" class="btn-primary">
                         Lihat Program & Kegiatan
                     </a>
+                    @if ($hasBrochures)
+                        <button
+                            type="button"
+                            x-data
+                            x-on:click="$dispatch('open-image-lightbox', { id: 'brosur-psb', index: 0 })"
+                            class="inline-flex items-center gap-2 rounded-xl border border-white/60 bg-white/10 px-5 py-3 text-sm font-semibold text-white backdrop-blur-sm transition hover:bg-white hover:text-pondok-primary"
+                        >
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M12 6.042A8.967 8.967 0 006 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 016 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 016-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0018 18a8.967 8.967 0 00-6 2.292m0-14.25v14.25" />
+                            </svg>
+                            Lihat Brosur
+                        </button>
+                    @endif
                     <a href="#nilai-pesantren"
                         class="inline-flex items-center gap-2 text-sm font-semibold text-white hover:text-pondok-accent">
                         Nilai-Nilai Pesantren
@@ -547,6 +625,16 @@
                 <a href="{{ route('info') }}#pendaftaran" class="btn-primary bg-white text-pondok-primary hover:bg-pondok-accent hover:text-pondok-primary">
                     Informasi Pendaftaran
                 </a>
+                @if ($hasBrochures)
+                    <button
+                        type="button"
+                        x-data
+                        x-on:click="$dispatch('open-image-lightbox', { id: 'brosur-psb', index: 0 })"
+                        class="inline-flex items-center gap-2 rounded-xl border border-white/70 bg-white/10 px-6 py-3 text-sm font-semibold text-white transition hover:bg-white/20"
+                    >
+                        Lihat Brosur
+                    </button>
+                @endif
                 <a
                     href="https://wa.me/6281234567890?text={{ urlencode('Halo admin PPTQ Nurul Ikhlas, saya sudah menyelesaikan pendaftaran melalui website. Mohon bantuannya untuk proses selanjutnya.') }}"
                     target="_blank" rel="noopener"
@@ -566,9 +654,10 @@
 @push('scripts')
     <script>
         document.addEventListener('alpine:init', () => {
-            Alpine.data('promoModal', () => ({
+            Alpine.data('promoModal', (config = {}) => ({
                 visible: false,
                 timer: null,
+                autoCloseMs: Number(config.autoCloseMs || 0),
 
                 init() {
                     let dismissed = false;
@@ -583,7 +672,16 @@
                     }
 
                     this.visible = true;
-                    this.timer = setTimeout(() => this.dismiss(), 5000);
+                    if (this.autoCloseMs > 0) {
+                        this.timer = setTimeout(() => this.dismiss(), this.autoCloseMs);
+                    }
+                },
+
+                openBrochures() {
+                    this.dismiss();
+                    window.dispatchEvent(new CustomEvent('open-image-lightbox', {
+                        detail: { id: 'brosur-psb', index: 0 },
+                    }));
                 },
 
                 dismiss() {
