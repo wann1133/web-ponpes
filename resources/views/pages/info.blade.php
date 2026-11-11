@@ -21,6 +21,7 @@
             title="Brosur Resmi Pendaftaran Santri Baru"
             subtitle="Ketuk panah atau geser untuk melihat halaman lainnya"
             item-label="Brosur"
+            max-width="max-w-5xl"
             :downloadable="true"
             :cta-url="$registrationHref"
             :cta-label="$settings->effective_registration_button_label"
