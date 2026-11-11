@@ -88,6 +88,7 @@
             title="Brosur Resmi Pendaftaran Santri Baru"
             subtitle="Ketuk panah atau geser untuk melihat halaman brosur"
             item-label="Brosur"
+            max-width="max-w-5xl"
             :downloadable="true"
             :cta-url="$settings->effective_promo_link"
             cta-label="Daftar Sekarang"
