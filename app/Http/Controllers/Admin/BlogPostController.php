@@ -5,19 +5,29 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\BlogPostRequest;
 use App\Models\BlogPost;
+use App\Models\BlogPostPhoto;
+use App\Services\BlogImageService;
 use Illuminate\Http\UploadedFile;
-use Illuminate\Support\Facades\File;
-use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 
 class BlogPostController extends Controller
 {
+    public function __construct(private readonly BlogImageService $imageService)
+    {
+    }
+
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $posts = BlogPost::orderByDesc('published_at')->orderByDesc('created_at')->get();
+        $posts = BlogPost::withCount('photos')
+            ->with('firstPhoto')
+            ->orderByDesc('published_at')
+            ->orderByDesc('created_at')
+            ->get();
 
         return view('admin.blog-posts.index', compact('posts'));
     }
@@ -27,7 +37,10 @@ class BlogPostController extends Controller
      */
     public function create()
     {
-        return view('admin.blog-posts.create', ['post' => new BlogPost()]);
+        $post = new BlogPost();
+        $post->setRelation('photos', collect());
+
+        return view('admin.blog-posts.create', ['post' => $post]);
     }
 
     /**
@@ -35,19 +48,24 @@ class BlogPostController extends Controller
      */
     public function store(BlogPostRequest $request)
     {
-        $data = $this->prepareData($request->validated());
+        $validated = $request->validated();
+        $data = $this->prepareData($this->extractPostAttributes($validated));
 
         if ($request->hasFile('thumbnail')) {
             $data['thumbnail_path'] = $this->storeThumbnail($request->file('thumbnail'));
         }
 
-        unset($data['thumbnail'], $data['remove_thumbnail']);
+        $post = DB::transaction(function () use ($data, $request) {
+            $post = BlogPost::create($data);
 
-        $post = BlogPost::create($data);
+            if ($post->is_featured) {
+                BlogPost::where('id', '!=', $post->id)->update(['is_featured' => false]);
+            }
 
-        if ($post->is_featured) {
-            BlogPost::where('id', '!=', $post->id)->update(['is_featured' => false]);
-        }
+            $this->appendGalleryPhotos($post, $request->file('gallery_photos', []));
+
+            return $post;
+        });
 
         return redirect()
             ->route('admin.blog-posts.edit', $post)
@@ -67,6 +85,8 @@ class BlogPostController extends Controller
      */
     public function edit(BlogPost $blogPost)
     {
+        $blogPost->load('photos');
+
         return view('admin.blog-posts.edit', ['post' => $blogPost]);
     }
 
@@ -75,10 +95,11 @@ class BlogPostController extends Controller
      */
     public function update(BlogPostRequest $request, BlogPost $blogPost)
     {
-        $data = $this->prepareData($request->validated(), $blogPost);
+        $validated = $request->validated();
+        $data = $this->prepareData($this->extractPostAttributes($validated), $blogPost);
 
         if ($request->boolean('remove_thumbnail')) {
-            $this->deleteThumbnail($blogPost);
+            $this->imageService->deleteFile($blogPost->thumbnail_path);
             $data['thumbnail_path'] = null;
         }
 
@@ -86,13 +107,21 @@ class BlogPostController extends Controller
             $data['thumbnail_path'] = $this->storeThumbnail($request->file('thumbnail'), $blogPost);
         }
 
-        unset($data['thumbnail'], $data['remove_thumbnail']);
+        DB::transaction(function () use ($blogPost, $data, $validated, $request) {
+            $blogPost->update($data);
 
-        $blogPost->update($data);
+            if ($blogPost->is_featured) {
+                BlogPost::where('id', '!=', $blogPost->id)->update(['is_featured' => false]);
+            }
 
-        if ($blogPost->is_featured) {
-            BlogPost::where('id', '!=', $blogPost->id)->update(['is_featured' => false]);
-        }
+            $this->syncExistingGalleryPhotos(
+                $blogPost,
+                $validated['delete_photo_ids'] ?? [],
+                $validated['existing_photo_order'] ?? []
+            );
+
+            $this->appendGalleryPhotos($blogPost, $request->file('gallery_photos', []));
+        });
 
         return redirect()
             ->route('admin.blog-posts.edit', $blogPost)
@@ -104,12 +133,30 @@ class BlogPostController extends Controller
      */
     public function destroy(BlogPost $blogPost)
     {
-        $this->deleteThumbnail($blogPost);
+        $blogPost->load('photos');
+
+        $this->imageService->deleteFile($blogPost->thumbnail_path);
+
+        foreach ($blogPost->photos as $photo) {
+            $this->imageService->deleteFile($photo->file_path);
+        }
+
         $blogPost->delete();
 
         return redirect()
             ->route('admin.blog-posts.index')
             ->with('status', 'Artikel blog berhasil dihapus.');
+    }
+
+    private function extractPostAttributes(array $validated): array
+    {
+        return Arr::except($validated, [
+            'thumbnail',
+            'remove_thumbnail',
+            'gallery_photos',
+            'existing_photo_order',
+            'delete_photo_ids',
+        ]);
     }
 
     private function prepareData(array $data, ?BlogPost $post = null): array
@@ -133,40 +180,90 @@ class BlogPostController extends Controller
     private function storeThumbnail(UploadedFile $file, ?BlogPost $existing = null): string
     {
         if ($existing) {
-            $this->deleteThumbnail($existing);
+            $this->imageService->deleteFile($existing->thumbnail_path);
         }
 
-        $directory = public_path('images/blog');
-
-        if (! File::isDirectory($directory)) {
-            File::makeDirectory($directory, 0755, true);
-        }
-
-        $extension = $file->getClientOriginalExtension() ?: $file->extension() ?: 'jpg';
-        $filename = Str::uuid()->toString().'.'.strtolower($extension);
-
-        $file->move($directory, $filename);
-
-        return 'images/blog/'.$filename;
+        return $this->imageService->storeCompressed($file, 'images/blog', 1400, 82);
     }
 
-    private function deleteThumbnail(BlogPost $post): void
+    /**
+     * @param  array<int, UploadedFile|mixed>  $files
+     */
+    private function appendGalleryPhotos(BlogPost $post, array $files): void
     {
-        $path = $post->thumbnail_path;
+        $validFiles = array_values(array_filter(
+            $files,
+            fn ($file) => $file instanceof UploadedFile && $file->isValid()
+        ));
 
-        if (blank($path) || Str::startsWith($path, ['http://', 'https://'])) {
+        if ($validFiles === []) {
             return;
         }
 
-        if (Storage::disk('public')->exists($path)) {
-            Storage::disk('public')->delete($path);
+        $nextOrder = ((int) $post->photos()->max('sort_order')) + 10;
+
+        foreach ($validFiles as $file) {
+            $path = $this->imageService->storeCompressed($file, 'images/blog/gallery', 1600, 82);
+
+            $post->photos()->create([
+                'file_path' => $path,
+                'sort_order' => $nextOrder,
+            ]);
+
+            $nextOrder += 10;
+        }
+    }
+
+    /**
+     * @param  array<int, int|string>  $deleteIds
+     * @param  array<int, int|string>  $orderedIds
+     */
+    private function syncExistingGalleryPhotos(BlogPost $post, array $deleteIds, array $orderedIds): void
+    {
+        $deleteIdList = array_values(array_unique(array_map('intval', $deleteIds)));
+
+        if ($deleteIdList !== []) {
+            $photosToDelete = $post->photos()->whereIn('id', $deleteIdList)->get();
+
+            foreach ($photosToDelete as $photo) {
+                $this->imageService->deleteFile($photo->file_path);
+                $photo->delete();
+            }
+        }
+
+        $remainingPhotos = $post->photos()->get()->keyBy('id');
+
+        if ($remainingPhotos->isEmpty()) {
             return;
         }
 
-        $publicPath = public_path($path);
+        $sortOrder = 10;
+        $processedIds = [];
 
-        if (File::exists($publicPath)) {
-            File::delete($publicPath);
+        foreach ($orderedIds as $rawId) {
+            $photoId = (int) $rawId;
+            /** @var BlogPostPhoto|null $photo */
+            $photo = $remainingPhotos->get($photoId);
+
+            if (! $photo || isset($processedIds[$photoId])) {
+                continue;
+            }
+
+            if ($photo->sort_order !== $sortOrder) {
+                $photo->update(['sort_order' => $sortOrder]);
+            }
+
+            $processedIds[$photoId] = true;
+            $sortOrder += 10;
+        }
+
+        foreach ($remainingPhotos as $photoId => $photo) {
+            if (isset($processedIds[$photoId])) {
+                continue;
+            }
+
+            $photo->update(['sort_order' => $sortOrder]);
+            $sortOrder += 10;
         }
     }
 }
