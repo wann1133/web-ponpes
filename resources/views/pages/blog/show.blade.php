@@ -121,92 +121,140 @@
                         <div
                             x-show="isOpen"
                             x-cloak
-                            x-transition.opacity.duration.200ms
+                            x-transition:enter="transition ease-out duration-200"
+                            x-transition:enter-start="opacity-0"
+                            x-transition:enter-end="opacity-100"
+                            x-transition:leave="transition ease-in duration-150"
+                            x-transition:leave-start="opacity-100"
+                            x-transition:leave-end="opacity-0"
                             role="dialog"
                             aria-modal="true"
                             aria-label="Penampil foto penuh"
-                            class="fixed inset-0 z-[80] flex flex-col bg-black/95 text-white select-none"
+                            class="fixed inset-0 z-[80] flex items-center justify-center bg-slate-900/45 p-3 backdrop-blur-md select-none sm:p-6"
+                            x-on:click.self="close()"
                             x-on:keydown.escape.window="isOpen && close()"
                             x-on:keydown.arrow-right.window="isOpen && next()"
                             x-on:keydown.arrow-left.window="isOpen && prev()"
                         >
-                            <div class="flex items-center justify-between px-4 py-3 sm:px-6 sm:py-4">
-                                <div class="rounded-full bg-white/10 px-3.5 py-1.5 text-xs font-semibold tracking-wide text-white/95 sm:text-sm">
-                                    Foto <span x-text="currentIndex + 1"></span> dari <span x-text="photos.length"></span>
-                                </div>
-
-                                <button
-                                    type="button"
-                                    x-on:click="close()"
-                                    aria-label="Tutup galeri foto"
-                                    class="inline-flex h-10 w-10 items-center justify-center rounded-full bg-white/10 text-white transition hover:bg-white/20 focus:outline-none focus:ring-2 focus:ring-white/60"
-                                >
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
-                                        stroke="currentColor" stroke-width="2">
-                                        <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
-                                    </svg>
-                                </button>
-                            </div>
-
                             <div
-                                class="relative flex flex-1 items-center justify-center overflow-hidden px-3 py-2 sm:px-16"
-                                x-on:click.self="close()"
-                                x-on:touchstart.passive="onTouchStart($event)"
-                                x-on:touchmove.passive="onTouchMove($event)"
-                                x-on:touchend="onTouchEnd($event)"
+                                x-show="isOpen"
+                                x-transition:enter="transition ease-out duration-200"
+                                x-transition:enter-start="opacity-0 scale-95 translate-y-2"
+                                x-transition:enter-end="opacity-100 scale-100 translate-y-0"
+                                x-transition:leave="transition ease-in duration-150"
+                                x-transition:leave-start="opacity-100 scale-100 translate-y-0"
+                                x-transition:leave-end="opacity-0 scale-95 translate-y-2"
+                                x-on:click.stop
+                                class="relative flex max-h-[92vh] w-full max-w-4xl flex-col overflow-hidden rounded-3xl border border-white/60 bg-white/95 text-slate-800 shadow-2xl backdrop-blur-xl"
                             >
-                                <template x-if="photos.length > 1">
+                                <div class="flex items-center justify-between gap-3 border-b border-pondok-primary/10 px-4 py-3 sm:px-6 sm:py-4">
+                                    <div class="flex min-w-0 items-center gap-3">
+                                        <span class="inline-flex flex-shrink-0 items-center rounded-full bg-pondok-primary/10 px-3 py-1 text-xs font-semibold text-pondok-primary sm:text-sm">
+                                            Foto <span class="mx-1" x-text="currentIndex + 1"></span> dari <span class="ml-1" x-text="photos.length"></span>
+                                        </span>
+                                        <span class="hidden truncate text-sm font-semibold text-slate-700 sm:inline">
+                                            {{ $post->title }}
+                                        </span>
+                                    </div>
+
                                     <button
                                         type="button"
-                                        x-on:click.stop="prev()"
-                                        aria-label="Foto sebelumnya"
-                                        class="absolute left-2 z-10 inline-flex h-11 w-11 items-center justify-center rounded-full bg-black/55 text-white backdrop-blur-sm transition hover:bg-white/20 focus:outline-none focus:ring-2 focus:ring-white/60 sm:left-5 sm:h-12 sm:w-12"
+                                        x-on:click="close()"
+                                        aria-label="Tutup galeri foto"
+                                        class="inline-flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-full bg-slate-100 text-slate-600 transition hover:bg-pondok-primary/10 hover:text-pondok-primary focus:outline-none focus:ring-2 focus:ring-pondok-primary/40"
                                     >
-                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
                                             stroke="currentColor" stroke-width="2">
-                                            <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
                                         </svg>
                                     </button>
-                                </template>
+                                </div>
 
                                 <div
-                                    class="flex max-h-full max-w-full items-center justify-center"
-                                    :style="dragStyle"
-                                    x-on:click.stop
+                                    class="relative flex min-h-[260px] flex-1 items-center justify-center overflow-hidden bg-slate-100/80 px-2 py-3 sm:min-h-[380px] sm:px-16 sm:py-5"
+                                    x-on:touchstart.passive="onTouchStart($event)"
+                                    x-on:touchmove.passive="onTouchMove($event)"
+                                    x-on:touchend="onTouchEnd($event)"
                                 >
-                                    <img
-                                        :src="currentPhoto.url"
-                                        :alt="currentPhoto.alt"
-                                        draggable="false"
-                                        class="max-h-[74vh] max-w-full rounded-xl object-contain shadow-2xl"
+                                    <template x-if="photos.length > 1">
+                                        <button
+                                            type="button"
+                                            x-on:click.stop="prev()"
+                                            aria-label="Foto sebelumnya"
+                                            class="absolute left-2 z-10 inline-flex h-10 w-10 items-center justify-center rounded-full border border-pondok-primary/15 bg-white/90 text-pondok-primary shadow-md backdrop-blur-sm transition hover:bg-pondok-primary hover:text-white focus:outline-none focus:ring-2 focus:ring-pondok-primary/40 sm:left-4 sm:h-11 sm:w-11"
+                                        >
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
+                                                stroke="currentColor" stroke-width="2">
+                                                <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
+                                            </svg>
+                                        </button>
+                                    </template>
+
+                                    <div
+                                        class="flex max-h-full max-w-full items-center justify-center"
+                                        :style="dragStyle"
                                     >
+                                        <img
+                                            :src="currentPhoto.url"
+                                            :alt="currentPhoto.alt"
+                                            draggable="false"
+                                            class="max-h-[54vh] w-auto max-w-full rounded-2xl object-contain shadow-lg sm:max-h-[60vh]"
+                                        >
+                                    </div>
+
+                                    <template x-if="photos.length > 1">
+                                        <button
+                                            type="button"
+                                            x-on:click.stop="next()"
+                                            aria-label="Foto berikutnya"
+                                            class="absolute right-2 z-10 inline-flex h-10 w-10 items-center justify-center rounded-full border border-pondok-primary/15 bg-white/90 text-pondok-primary shadow-md backdrop-blur-sm transition hover:bg-pondok-primary hover:text-white focus:outline-none focus:ring-2 focus:ring-pondok-primary/40 sm:right-4 sm:h-11 sm:w-11"
+                                        >
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
+                                                stroke="currentColor" stroke-width="2">
+                                                <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5L15.75 12l-7.5 7.5" />
+                                            </svg>
+                                        </button>
+                                    </template>
                                 </div>
 
-                                <template x-if="photos.length > 1">
-                                    <button
-                                        type="button"
-                                        x-on:click.stop="next()"
-                                        aria-label="Foto berikutnya"
-                                        class="absolute right-2 z-10 inline-flex h-11 w-11 items-center justify-center rounded-full bg-black/55 text-white backdrop-blur-sm transition hover:bg-white/20 focus:outline-none focus:ring-2 focus:ring-white/60 sm:right-5 sm:h-12 sm:w-12"
-                                    >
-                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
-                                            stroke="currentColor" stroke-width="2">
-                                            <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5L15.75 12l-7.5 7.5" />
-                                        </svg>
-                                    </button>
-                                </template>
-                            </div>
-
-                            <div class="border-t border-white/10 bg-black/60 px-4 py-3 text-center sm:px-6 sm:py-4">
-                                <p class="mx-auto max-w-3xl text-sm font-medium text-white line-clamp-2">
-                                    {{ $post->title }}
-                                </p>
-                                <p class="mt-1 text-xs text-white/60">
-                                    <span>{{ $post->formatted_date }}</span>
+                                <div class="space-y-2.5 border-t border-pondok-primary/10 bg-white/95 px-4 py-3 sm:px-6 sm:py-3.5">
                                     <template x-if="photos.length > 1">
-                                        <span> &bull; Geser layar atau gunakan tombol untuk berpindah foto</span>
+                                        <div
+                                            x-ref="thumbStrip"
+                                            class="flex items-center gap-2 overflow-x-auto px-1 py-1 sm:justify-center"
+                                        >
+                                            <template x-for="(photo, index) in photos" :key="index">
+                                                <button
+                                                    type="button"
+                                                    :data-thumb-index="index"
+                                                    x-on:click="goTo(index)"
+                                                    :aria-label="`Pilih foto ${index + 1}`"
+                                                    class="relative h-12 w-12 flex-shrink-0 overflow-hidden rounded-xl transition duration-200 focus:outline-none sm:h-14 sm:w-14"
+                                                    :class="index === currentIndex ? 'ring-2 ring-pondok-primary ring-offset-2 opacity-100 scale-105' : 'opacity-55 hover:opacity-90'"
+                                                >
+                                                    <img
+                                                        :src="photo.url"
+                                                        :alt="photo.alt"
+                                                        loading="lazy"
+                                                        class="h-full w-full object-cover"
+                                                    >
+                                                </button>
+                                            </template>
+                                        </div>
                                     </template>
-                                </p>
+
+                                    <div class="text-center">
+                                        <p class="text-xs font-semibold text-slate-700 line-clamp-1 sm:hidden">
+                                            {{ $post->title }}
+                                        </p>
+                                        <p class="text-[11px] text-slate-500 sm:text-xs">
+                                            <span>{{ $post->formatted_date }}</span>
+                                            <template x-if="photos.length > 1">
+                                                <span> &bull; Geser foto, pilih thumbnail, atau tekan panah</span>
+                                            </template>
+                                        </p>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -306,6 +354,7 @@
                             this.currentIndex = Math.max(0, Math.min(index, this.photos.length - 1));
                             this.isOpen = true;
                             document.body.classList.add('overflow-hidden');
+                            this.$nextTick(() => this.scrollActiveThumb());
                         },
 
                         close() {
@@ -314,12 +363,21 @@
                             document.body.classList.remove('overflow-hidden');
                         },
 
+                        goTo(index) {
+                            if (!this.photos.length) {
+                                return;
+                            }
+
+                            this.currentIndex = Math.max(0, Math.min(index, this.photos.length - 1));
+                            this.$nextTick(() => this.scrollActiveThumb());
+                        },
+
                         next() {
                             if (this.photos.length <= 1) {
                                 return;
                             }
 
-                            this.currentIndex = (this.currentIndex + 1) % this.photos.length;
+                            this.goTo((this.currentIndex + 1) % this.photos.length);
                         },
 
                         prev() {
@@ -327,7 +385,19 @@
                                 return;
                             }
 
-                            this.currentIndex = (this.currentIndex - 1 + this.photos.length) % this.photos.length;
+                            this.goTo((this.currentIndex - 1 + this.photos.length) % this.photos.length);
+                        },
+
+                        scrollActiveThumb() {
+                            const strip = this.$refs.thumbStrip;
+                            if (!strip) {
+                                return;
+                            }
+
+                            const activeBtn = strip.querySelector(`[data-thumb-index="${this.currentIndex}"]`);
+                            if (activeBtn && typeof activeBtn.scrollIntoView === 'function') {
+                                activeBtn.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+                            }
                         },
 
                         onTouchStart(event) {
