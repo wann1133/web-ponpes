@@ -289,68 +289,13 @@
 @push('scripts')
     <script>
         (() => {
-            const MAX_DIMENSION = 1600;
-            const JPEG_QUALITY = 0.84;
+            const compressImageFile = (file) =>
+                typeof window.ponpesCompressImageFile === 'function'
+                    ? window.ponpesCompressImageFile(file, { maxDimension: 1600, quality: 0.84, minSkipSize: 350 * 1024 })
+                    : Promise.resolve(file);
 
-            async function compressImageFile(file) {
-                if (!file || !file.type || !file.type.startsWith('image/')) {
-                    return file;
-                }
-
-                // Skip tiny files already small enough for web unless dimensions are oversized.
-                if (typeof createImageBitmap !== 'function') {
-                    return file;
-                }
-
-                try {
-                    const bitmap = await createImageBitmap(file);
-                    const width = bitmap.width;
-                    const height = bitmap.height;
-                    const largest = Math.max(width, height);
-
-                    if (largest <= MAX_DIMENSION && file.size <= 350 * 1024) {
-                        if (typeof bitmap.close === 'function') {
-                            bitmap.close();
-                        }
-                        return file;
-                    }
-
-                    const scale = largest > MAX_DIMENSION ? MAX_DIMENSION / largest : 1;
-                    const targetW = Math.max(1, Math.round(width * scale));
-                    const targetH = Math.max(1, Math.round(height * scale));
-
-                    const canvas = document.createElement('canvas');
-                    canvas.width = targetW;
-                    canvas.height = targetH;
-                    const ctx = canvas.getContext('2d');
-                    ctx.fillStyle = '#ffffff';
-                    ctx.fillRect(0, 0, targetW, targetH);
-                    ctx.drawImage(bitmap, 0, 0, targetW, targetH);
-
-                    if (typeof bitmap.close === 'function') {
-                        bitmap.close();
-                    }
-
-                    const blob = await new Promise((resolve) => canvas.toBlob(resolve, 'image/jpeg', JPEG_QUALITY));
-                    if (!blob || (blob.size >= file.size && largest <= MAX_DIMENSION)) {
-                        return file;
-                    }
-
-                    const cleanBase = file.name.replace(/\.[^.]+$/, '') || 'foto';
-                    return new File([blob], `${cleanBase}.jpg`, {
-                        type: 'image/jpeg',
-                        lastModified: Date.now(),
-                    });
-                } catch (error) {
-                    return file;
-                }
-            }
-
-            function formatBytes(bytes) {
-                if (bytes < 1024) return `${bytes} B`;
-                if (bytes < 1024 * 1024) return `${Math.round(bytes / 1024)} KB`;
-                return `${(bytes / (1024 * 1024)).toFixed(1)} MB`;
-            }
+            const formatBytes = (bytes) =>
+                typeof window.ponpesFormatBytes === 'function' ? window.ponpesFormatBytes(bytes) : `${Math.round(bytes / 1024)} KB`;
 
             const registerAdminGallery = () => {
                 Alpine.data('blogGalleryAdmin', (initialExisting = []) => ({
