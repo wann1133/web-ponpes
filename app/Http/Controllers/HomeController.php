@@ -62,6 +62,8 @@ class HomeController extends Controller
         ];
 
         $blogPosts = BlogPost::published()
+            ->withCount('photos')
+            ->with('firstPhoto')
             ->orderByDesc('published_at')
             ->take(3)
             ->get();
