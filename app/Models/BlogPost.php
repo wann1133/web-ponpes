@@ -2,10 +2,12 @@
 
 namespace App\Models;
 
+use App\Services\BlogImageService;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Support\Carbon;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
 class BlogPost extends Model
@@ -47,6 +49,22 @@ class BlogPost extends Model
         });
     }
 
+    public function photos(): HasMany
+    {
+        return $this->hasMany(BlogPostPhoto::class)
+            ->orderBy('sort_order')
+            ->orderBy('id');
+    }
+
+    public function firstPhoto(): HasOne
+    {
+        return $this->hasOne(BlogPostPhoto::class)
+            ->ofMany([
+                'sort_order' => 'min',
+                'id' => 'min',
+            ]);
+    }
+
     public function scopePublished($query)
     {
         return $query
@@ -68,27 +86,28 @@ class BlogPost extends Model
         return $this->category ? Str::slug($this->category) : null;
     }
 
+    public function getCustomThumbnailUrlAttribute(): ?string
+    {
+        return BlogImageService::resolveUrl($this->thumbnail_path);
+    }
+
     public function getThumbnailUrlAttribute(): ?string
     {
-        if (blank($this->thumbnail_path)) {
-            return null;
+        $customUrl = $this->custom_thumbnail_url;
+
+        if ($customUrl !== null) {
+            return $customUrl;
         }
 
-        if (Str::startsWith($this->thumbnail_path, ['http://', 'https://'])) {
-            return $this->thumbnail_path;
+        if ($this->relationLoaded('photos')) {
+            return $this->photos->first()?->url;
         }
 
-        if (Storage::disk('public')->exists($this->thumbnail_path)) {
-            return Storage::url($this->thumbnail_path);
+        if ($this->relationLoaded('firstPhoto')) {
+            return $this->firstPhoto?->url;
         }
 
-        $publicPath = public_path($this->thumbnail_path);
-
-        if (file_exists($publicPath)) {
-            return asset($this->thumbnail_path);
-        }
-
-        return null;
+        return $this->photos()->first()?->url;
     }
 
     protected static function generateUniqueSlug(string $title, ?int $ignoreId = null): string
