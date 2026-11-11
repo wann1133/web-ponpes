@@ -499,11 +499,16 @@
 
                     <article class="group flex h-full flex-col overflow-hidden rounded-3xl border border-pondok-primary/10 bg-white shadow-sm transition hover:-translate-y-1 hover:shadow-soft">
                         <div class="relative aspect-[4/3] overflow-hidden bg-pondok-accent">
-                            <img src="{{ $thumbnail }}" alt="{{ $post->title }}"
-                                class="absolute inset-0 h-full w-full object-cover transition duration-500 group-hover:scale-105">
-                                <span class="absolute left-4 top-4 rounded-full bg-white/90 px-3 py-1 text-xs font-semibold text-pondok-primary">
+                            <a href="{{ route('blog.show', $post) }}" class="block h-full w-full">
+                                <img src="{{ $thumbnail }}" alt="{{ $post->title }}"
+                                    class="absolute inset-0 h-full w-full object-cover transition duration-500 group-hover:scale-105">
+                            </a>
+                            @if ($post->category)
+                                <span class="pointer-events-none absolute left-4 top-4 rounded-full bg-white/90 px-3 py-1 text-xs font-semibold text-pondok-primary">
                                     {{ $post->category }}
                                 </span>
+                            @endif
+                            <x-blog-photo-badge :count="$post->photos_count ?? 0" class="pointer-events-none" />
                         </div>
                         <div class="flex flex-1 flex-col gap-4 p-6">
                             <div class="flex flex-wrap items-center gap-2 text-xs text-gray-500">
