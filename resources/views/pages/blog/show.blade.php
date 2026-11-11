@@ -145,9 +145,9 @@
                                 x-transition:leave-start="opacity-100 scale-100 translate-y-0"
                                 x-transition:leave-end="opacity-0 scale-95 translate-y-2"
                                 x-on:click.stop
-                                class="relative flex max-h-[92vh] w-full max-w-4xl flex-col overflow-hidden rounded-3xl border border-white/60 bg-white/95 text-slate-800 shadow-2xl backdrop-blur-xl"
+                                class="relative flex max-h-[92vh] w-full max-w-3xl flex-col gap-3 overflow-hidden rounded-3xl border border-white/70 bg-white/95 p-4 text-slate-800 shadow-2xl backdrop-blur-xl sm:gap-4 sm:p-5"
                             >
-                                <div class="flex items-center justify-between gap-3 border-b border-pondok-primary/10 px-4 py-3 sm:px-6 sm:py-4">
+                                <div class="flex items-center justify-between gap-3">
                                     <div class="flex min-w-0 items-center gap-3">
                                         <span class="inline-flex flex-shrink-0 items-center rounded-full bg-pondok-primary/10 px-3 py-1 text-xs font-semibold text-pondok-primary sm:text-sm">
                                             Foto <span class="mx-1" x-text="currentIndex + 1"></span> dari <span class="ml-1" x-text="photos.length"></span>
@@ -171,26 +171,17 @@
                                 </div>
 
                                 <div
-                                    class="relative h-[52vh] w-full overflow-hidden bg-slate-900/10 sm:h-[62vh]"
+                                    class="relative w-full overflow-hidden rounded-2xl"
                                     x-on:touchstart.passive="onTouchStart($event)"
                                     x-on:touchmove.passive="onTouchMove($event)"
                                     x-on:touchend="onTouchEnd($event)"
                                 >
-                                    <img
-                                        :src="currentPhoto.url"
-                                        alt=""
-                                        aria-hidden="true"
-                                        draggable="false"
-                                        class="pointer-events-none absolute inset-0 h-full w-full scale-110 object-cover opacity-35 blur-2xl"
-                                    >
-                                    <div class="pointer-events-none absolute inset-0 bg-white/15"></div>
-
                                     <template x-if="photos.length > 1">
                                         <button
                                             type="button"
                                             x-on:click.stop="prev()"
                                             aria-label="Foto sebelumnya"
-                                            class="absolute left-3 top-1/2 z-10 inline-flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full border border-pondok-primary/15 bg-white/85 text-pondok-primary shadow-md backdrop-blur-sm transition hover:bg-pondok-primary hover:text-white focus:outline-none focus:ring-2 focus:ring-pondok-primary/40 sm:left-4 sm:h-11 sm:w-11"
+                                            class="absolute left-2.5 top-1/2 z-10 inline-flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full border border-pondok-primary/15 bg-white/85 text-pondok-primary shadow-md backdrop-blur-sm transition hover:bg-pondok-primary hover:text-white focus:outline-none focus:ring-2 focus:ring-pondok-primary/40 sm:left-3.5 sm:h-11 sm:w-11"
                                         >
                                             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
                                                 stroke="currentColor" stroke-width="2">
@@ -200,14 +191,16 @@
                                     </template>
 
                                     <div
-                                        class="relative z-[1] flex h-full w-full items-center justify-center"
+                                        class="flex w-full items-center justify-center"
                                         :style="dragStyle"
                                     >
                                         <img
+                                            x-ref="mainImg"
                                             :src="currentPhoto.url"
                                             :alt="currentPhoto.alt"
                                             draggable="false"
-                                            class="h-full w-full object-contain drop-shadow-md"
+                                            x-on:load="syncOrientation($event.target)"
+                                            :class="isPortrait ? 'h-[60vh] w-auto max-w-full rounded-2xl object-contain shadow-sm' : 'block h-auto max-h-[65vh] w-full rounded-2xl object-contain'"
                                         >
                                     </div>
 
@@ -216,7 +209,7 @@
                                             type="button"
                                             x-on:click.stop="next()"
                                             aria-label="Foto berikutnya"
-                                            class="absolute right-3 top-1/2 z-10 inline-flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full border border-pondok-primary/15 bg-white/85 text-pondok-primary shadow-md backdrop-blur-sm transition hover:bg-pondok-primary hover:text-white focus:outline-none focus:ring-2 focus:ring-pondok-primary/40 sm:right-4 sm:h-11 sm:w-11"
+                                            class="absolute right-2.5 top-1/2 z-10 inline-flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full border border-pondok-primary/15 bg-white/85 text-pondok-primary shadow-md backdrop-blur-sm transition hover:bg-pondok-primary hover:text-white focus:outline-none focus:ring-2 focus:ring-pondok-primary/40 sm:right-3.5 sm:h-11 sm:w-11"
                                         >
                                             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
                                                 stroke="currentColor" stroke-width="2">
@@ -226,7 +219,7 @@
                                     </template>
                                 </div>
 
-                                <div class="space-y-2.5 border-t border-pondok-primary/10 bg-white/95 px-4 py-3 sm:px-6 sm:py-3.5">
+                                <div class="space-y-2">
                                     <template x-if="photos.length > 1">
                                         <div
                                             x-ref="thumbStrip"
@@ -332,6 +325,7 @@
                         photos,
                         isOpen: false,
                         currentIndex: 0,
+                        isPortrait: false,
                         touchStartX: null,
                         touchStartY: null,
                         touchDeltaX: 0,
@@ -355,6 +349,14 @@
                             return `transition: none; transform: translateX(${this.touchDeltaX}px);`;
                         },
 
+                        syncOrientation(img) {
+                            if (!img || !img.naturalWidth) {
+                                return;
+                            }
+
+                            this.isPortrait = img.naturalHeight > img.naturalWidth;
+                        },
+
                         open(index = 0) {
                             if (!this.photos.length) {
                                 return;
@@ -363,7 +365,10 @@
                             this.currentIndex = Math.max(0, Math.min(index, this.photos.length - 1));
                             this.isOpen = true;
                             document.body.classList.add('overflow-hidden');
-                            this.$nextTick(() => this.scrollActiveThumb());
+                            this.$nextTick(() => {
+                                this.syncOrientation(this.$refs.mainImg);
+                                this.scrollActiveThumb();
+                            });
                         },
 
                         close() {
@@ -378,7 +383,10 @@
                             }
 
                             this.currentIndex = Math.max(0, Math.min(index, this.photos.length - 1));
-                            this.$nextTick(() => this.scrollActiveThumb());
+                            this.$nextTick(() => {
+                                this.syncOrientation(this.$refs.mainImg);
+                                this.scrollActiveThumb();
+                            });
                         },
 
                         next() {
